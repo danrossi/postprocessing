@@ -15,11 +15,7 @@
 
 #endif
 
-#if DEPTH_PACKING == 3201
-
-	uniform lowp sampler2D depthBuffer;
-
-#elif defined(GL_FRAGMENT_PRECISION_HIGH)
+#if defined(GL_FRAGMENT_PRECISION_HIGH)
 
 	uniform highp sampler2D depthBuffer;
 
@@ -29,47 +25,19 @@
 
 #endif
 
-uniform vec2 resolution;
-uniform vec2 texelSize;
-
-uniform float cameraNear;
-uniform float cameraFar;
-uniform float aspect;
+uniform vec4 resolution; // XY = resolution, ZW = texelSize
+uniform vec3 cameraParams; // near, far, aspect
 uniform float time;
 
 varying vec2 vUv;
 
-#if THREE_REVISION < 143
+vec4 sRGBToLinear(const in vec4 value) {
 
-	#define luminance(v) linearToRelativeLuminance(v)
-
-#endif
-
-#if THREE_REVISION >= 137
-
-	vec4 sRGBToLinear(const in vec4 value) {
-
-		return vec4(mix(
-			pow(value.rgb * 0.9478672986 + vec3(0.0521327014), vec3(2.4)),
-			value.rgb * 0.0773993808,
-			vec3(lessThanEqual(value.rgb, vec3(0.04045)))
-		), value.a);
-
-	}
-
-#endif
-
-float readDepth(const in vec2 uv) {
-
-	#if DEPTH_PACKING == 3201
-
-		return unpackRGBAToDepth(texture2D(depthBuffer, uv));
-
-	#else
-
-		return texture2D(depthBuffer, uv).r;
-
-	#endif
+	return vec4(mix(
+		pow(value.rgb * 0.9478672986 + vec3(0.0521327014), vec3(2.4)),
+		value.rgb * 0.0773993808,
+		vec3(lessThanEqual(value.rgb, vec3(0.04045)))
+	), value.a);
 
 }
 

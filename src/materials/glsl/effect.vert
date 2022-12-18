@@ -1,9 +1,5 @@
-uniform vec2 resolution;
-uniform vec2 texelSize;
-
-uniform float cameraNear;
-uniform float cameraFar;
-uniform float aspect;
+uniform vec4 resolution; // XY = resolution, ZW = texelSize
+uniform vec3 cameraParams; // near, far, aspect
 uniform float time;
 
 varying vec2 vUv;

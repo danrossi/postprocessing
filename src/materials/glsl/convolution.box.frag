@@ -10,9 +10,7 @@
 
 #ifdef BILATERAL
 
-	#include <packing>
-
-	uniform vec2 cameraNearFar;
+	uniform vec2 cameraParams;
 
 	#ifdef NORMAL_DEPTH
 
@@ -26,19 +24,11 @@
 
 		#endif
 
-		float readDepth(const in vec2 uv) {
-
-			return texture2D(normalDepthBuffer, uv).a;
-
-		}
+		#define getDepth(uv) texture2D(normalDepthBuffer, uv).a
 
 	#else
 
-		#if DEPTH_PACKING == 3201
-
-			uniform lowp sampler2D depthBuffer;
-
-		#elif defined(GL_FRAGMENT_PRECISION_HIGH)
+		#ifdef GL_FRAGMENT_PRECISION_HIGH
 
 			uniform highp sampler2D depthBuffer;
 
@@ -48,19 +38,7 @@
 
 		#endif
 
-		float readDepth(const in vec2 uv) {
-
-			#if DEPTH_PACKING == 3201
-
-				return unpackRGBAToDepth(texture2D(depthBuffer, uv));
-
-			#else
-
-				return texture2D(depthBuffer, uv).r;
-
-			#endif
-
-		}
+		#define getDepth(uv) texture2D(depthBuffer, uv).r
 
 	#endif
 
@@ -68,11 +46,11 @@
 
 		#ifdef PERSPECTIVE_CAMERA
 
-			return perspectiveDepthToViewZ(depth, cameraNearFar.x, cameraNearFar.y);
+			return perspectiveDepthToViewZ(depth, cameraParams.x, cameraParams.y);
 
 		#else
 
-			return orthographicDepthToViewZ(depth, cameraNearFar.x, cameraNearFar.y);
+			return orthographicDepthToViewZ(depth, cameraParams.x, cameraParams.y);
 
 		#endif
 
@@ -80,17 +58,17 @@
 
 	#ifdef PERSPECTIVE_CAMERA
 
-		#define linearDepth(v) viewZToOrthographicDepth(getViewZ(readDepth(v)), cameraNearFar.x, cameraNearFar.y)
+		#define linearDepth(uv) viewZToOrthographicDepth(getViewZ(getDepth(uv)), cameraParams.x, cameraParams.y)
 
 	#else
 
-		#define linearDepth(v) readDepth(v)
+		#define linearDepth(uv) getDepth(uv)
 
 	#endif
 
 #endif
 
-#define getTexel(v) texture2D(inputBuffer, v)
+#define getTexel(uv) texture2D(inputBuffer, uv)
 
 #if KERNEL_SIZE == 3
 

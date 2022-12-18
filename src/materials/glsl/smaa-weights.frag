@@ -1,4 +1,4 @@
-#define sampleLevelZeroOffset(t, coord, offset) texture2D(t, coord + offset * texelSize)
+#define sampleLevelZeroOffset(t, coord, offset) texture2D(t, coord + offset * resolution.zw)
 
 #if __VERSION__ < 300
 
@@ -19,13 +19,11 @@
 uniform lowp sampler2D areaTexture;
 uniform lowp sampler2D searchTexture;
 
-uniform vec2 texelSize;
-uniform vec2 resolution;
+uniform vec4 resolution; // XY = resolution, ZW = texelSize
 
 varying vec2 vUv;
 varying vec4 vOffset[3];
 varying vec2 vPixCoord;
-
 
 /**
  * Moves values to a target vector based on a given conditional vector.
@@ -66,7 +64,6 @@ void movec(const in bvec4 c, inout vec4 variable, const in vec4 value) {
 vec2 decodeDiagBilinearAccess(in vec2 e) {
 
 	e.r = e.r * abs(5.0 * e.r - 5.0 * 0.75);
-
 	return round(e);
 
 }
@@ -74,7 +71,6 @@ vec2 decodeDiagBilinearAccess(in vec2 e) {
 vec4 decodeDiagBilinearAccess(in vec4 e) {
 
 	e.rb = e.rb * abs(5.0 * e.rb - 5.0 * 0.75);
-
 	return round(e);
 
 }
@@ -86,7 +82,7 @@ vec4 decodeDiagBilinearAccess(in vec4 e) {
 vec2 searchDiag1(const in vec2 texCoord, const in vec2 dir, out vec2 e) {
 
 	vec4 coord = vec4(texCoord, -1.0, 1.0);
-	vec3 t = vec3(texelSize, 1.0);
+	vec3 t = vec3(resolution.zw, 1.0);
 
 	for(int i = 0; i < MAX_SEARCH_STEPS_INT; ++i) {
 
@@ -109,8 +105,8 @@ vec2 searchDiag1(const in vec2 texCoord, const in vec2 dir, out vec2 e) {
 vec2 searchDiag2(const in vec2 texCoord, const in vec2 dir, out vec2 e) {
 
 	vec4 coord = vec4(texCoord, -1.0, 1.0);
-	coord.x += 0.25 * texelSize.x; // See @SearchDiag2Optimization
-	vec3 t = vec3(texelSize, 1.0);
+	coord.x += 0.25 * resolution.z; // See @SearchDiag2Optimization
+	vec3 t = vec3(resolution.zw, 1.0);
 
 	for(int i = 0; i < MAX_SEARCH_STEPS_INT; ++i) {
 
@@ -189,14 +185,14 @@ vec2 calculateDiagWeights(const in vec2 texCoord, const in vec2 e, const in vec4
 	if(d.x + d.y > 2.0) { // d.x + d.y + 1 > 3
 
 		// Fetch the crossing edges.
-		vec4 coords = vec4(-d.x + 0.25, d.x, d.y, -d.y - 0.25) * texelSize.xyxy + texCoord.xyxy;
+		vec4 coords = vec4(-d.x + 0.25, d.x, d.y, -d.y - 0.25) * resolution.zwzw + texCoord.xyxy;
 		vec4 c;
 		c.xy = sampleLevelZeroOffset(inputBuffer, coords.xy, vec2(-1, 0)).rg;
 		c.zw = sampleLevelZeroOffset(inputBuffer, coords.zw, vec2(1, 0)).rg;
 		c.yxwz = decodeDiagBilinearAccess(c.xyzw);
 
 		// Non-optimized version:
-		// vec4 coords = vec4(-d.x, d.x, d.y, -d.y) * texelSize.xyxy + texCoord.xyxy;
+		// vec4 coords = vec4(-d.x, d.x, d.y, -d.y) * resolution.zwzw + texCoord.xyxy;
 		// vec4 c;
 		// c.x = sampleLevelZeroOffset(inputBuffer, coords.xy, vec2(-1, 0)).g;
 		// c.y = sampleLevelZeroOffset(inputBuffer, coords.xy, vec2(0, 0)).r;
@@ -231,7 +227,7 @@ vec2 calculateDiagWeights(const in vec2 texCoord, const in vec2 e, const in vec4
 	if(d.x + d.y > 2.0) { // d.x + d.y + 1 > 3
 
 		// Fetch the crossing edges.
-		vec4 coords = vec4(-d.x, -d.x, d.y, d.y) * texelSize.xyxy + texCoord.xyxy;
+		vec4 coords = vec4(-d.x, -d.x, d.y, d.y) * resolution.zwzw + texCoord.xyxy;
 		vec4 c;
 		c.x = sampleLevelZeroOffset(inputBuffer, coords.xy, vec2(-1, 0)).g;
 		c.y = sampleLevelZeroOffset(inputBuffer, coords.xy, vec2(0, -1)).r;
@@ -299,23 +295,23 @@ float searchXLeft(in vec2 texCoord, const in float end) {
 		}
 
 		e = texture2D(inputBuffer, texCoord).rg;
-		texCoord = vec2(-2.0, 0.0) * texelSize + texCoord;
+		texCoord = vec2(-2.0, 0.0) * resolution.zw + texCoord;
 
 	}
 
 	float offset = -(255.0 / 127.0) * searchLength(e, 0.0) + 3.25;
 
-	return texelSize.x * offset + texCoord.x;
+	return resolution.z * offset + texCoord.x;
 
 	// Non-optimized version:
 	// Correct the previous (-0.25, -0.125) offset.
-	// texCoord.x += 0.25 * texelSize.x;
+	// texCoord.x += 0.25 * resolution.z;
 	// The searches are biased by 1, so adjust the coords accordingly.
-	// texCoord.x += texelSize.x;
+	// texCoord.x += resolution.z;
 	// Disambiguate the length added by the last step.
-	// texCoord.x += 2.0 * texelSize.x; // Undo last step.
-	// texCoord.x -= texelSize.x * (255.0 / 127.0) * searchLength(e, 0.0);
-	// return texelSize.x * offset + texCoord.x);
+	// texCoord.x += 2.0 * resolution.z; // Undo last step.
+	// texCoord.x -= resolution.z * (255.0 / 127.0) * searchLength(e, 0.0);
+	// return resolution.z * offset + texCoord.x);
 
 }
 
@@ -332,13 +328,13 @@ float searchXRight(vec2 texCoord, const in float end) {
 		}
 
 		e = texture2D(inputBuffer, texCoord).rg;
-		texCoord = vec2(2.0, 0.0) * texelSize.xy + texCoord;
+		texCoord = vec2(2.0, 0.0) * resolution.zw + texCoord;
 
 	}
 
 	float offset = -(255.0 / 127.0) * searchLength(e, 0.5) + 3.25;
 
-	return -texelSize.x * offset + texCoord.x;
+	return -resolution.z * offset + texCoord.x;
 
 }
 
@@ -359,13 +355,13 @@ float searchYUp(vec2 texCoord, const in float end) {
 		}
 
 		e = texture2D(inputBuffer, texCoord).rg;
-		texCoord = -vec2(0.0, 2.0) * texelSize.xy + texCoord;
+		texCoord = -vec2(0.0, 2.0) * resolution.zw + texCoord;
 
 	}
 
 	float offset = -(255.0 / 127.0) * searchLength(e.gr, 0.0) + 3.25;
 
-	return texelSize.y * offset + texCoord.y;
+	return resolution.w * offset + texCoord.y;
 
 }
 
@@ -382,13 +378,13 @@ float searchYDown(vec2 texCoord, const in float end) {
 		}
 
 		e = texture2D(inputBuffer, texCoord).rg;
-		texCoord = vec2(0.0, 2.0) * texelSize.xy + texCoord;
+		texCoord = vec2(0.0, 2.0) * resolution.zw + texCoord;
 
 	}
 
 	float offset = -(255.0 / 127.0) * searchLength(e.gr, 0.5) + 3.25;
 
-	return -texelSize.y * offset + texCoord.y;
+	return -resolution.w * offset + texCoord.y;
 
 }
 
@@ -484,20 +480,18 @@ void main() {
 		// Find the distance to the left.
 		vec3 coords;
 		coords.x = searchXLeft(vOffset[0].xy, vOffset[2].x);
-		coords.y = vOffset[1].y; // vOffset[1].y = vUv.y - 0.25 * texelSize.y (@CROSSING_OFFSET)
+		coords.y = vOffset[1].y; // vOffset[1].y = vUv.y - 0.25 * resolution.w (@CROSSING_OFFSET)
 		d.x = coords.x;
 
-		/* Now fetch the left crossing edges, two at a time using bilinear
-		filtering. Sampling at -0.25 (see @CROSSING_OFFSET) enables to discern what
-		value each edge has. */
+		/* Now fetch the left crossing edges, two at a time using bilinear filtering. Sampling at -0.25
+		(see @CROSSING_OFFSET) enables to discern what value each edge has. */
 		float e1 = texture2D(inputBuffer, coords.xy).r;
 
 		// Find the distance to the right.
 		coords.z = searchXRight(vOffset[0].zw, vOffset[2].y);
 		d.y = coords.z;
 
-		/* Translate distances to pixel units for better interleave arithmetic and
-		memory accesses. */
+		// Translate distances to pixel units for better interleave arithmetic and memory accesses.
 		d = round(resolution.xx * d + -vPixCoord.xx);
 
 		// The area texture is compressed quadratically.
@@ -535,7 +529,7 @@ void main() {
 		// Find the distance to the top.
 		vec3 coords;
 		coords.y = searchYUp(vOffset[1].xy, vOffset[2].z);
-		coords.x = vOffset[0].x; // vOffset[1].x = vUv.x - 0.25 * texelSize.x;
+		coords.x = vOffset[0].x; // vOffset[1].x = vUv.x - 0.25 * resolution.z;
 		d.x = coords.y;
 
 		// Fetch the top crossing edges.

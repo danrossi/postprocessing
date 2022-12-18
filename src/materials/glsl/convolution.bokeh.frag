@@ -28,16 +28,16 @@ void main() {
 
 	#ifdef FOREGROUND
 
-		vec2 CoCNearFar = texture2D(cocBuffer, vUv).rg;
-		float CoC = CoCNearFar.r * scale;
+		vec2 cocNearFar = texture2D(cocBuffer, vUv).rg;
+		float coc = CoCNearFar.r * scale;
 
 	#else
 
-		float CoC = texture2D(cocBuffer, vUv).g * scale;
+		float coc = texture2D(cocBuffer, vUv).g * scale;
 
 	#endif
 
-	if(CoC == 0.0) {
+	if(coc == 0.0) {
 
 		// Skip blurring.
 		gl_FragColor = texture2D(inputBuffer, vUv);
@@ -47,11 +47,11 @@ void main() {
 		#ifdef FOREGROUND
 
 			// Use far CoC to avoid weak blurring around foreground objects.
-			vec2 step = texelSize * max(CoC, CoCNearFar.g * scale);
+			vec2 step = texelSize * max(coc, cocNearFar.g * scale);
 
 		#else
 
-			vec2 step = texelSize * CoC;
+			vec2 step = texelSize * coc;
 
 		#endif
 

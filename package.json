@@ -1,38 +1,34 @@
 {
 	"name": "postprocessing",
-	"version": "6.29.2",
+	"version": "7.0.0-alpha",
 	"description": "A post processing library that provides the means to implement image filter effects for three.js.",
 	"homepage": "https://github.com/pmndrs/postprocessing",
-	"main": "build/postprocessing.js",
-	"module": "build/postprocessing.esm.js",
+	"main": "dist/postprocessing.js",
+	"module": "dist/postprocessing.js",
+	"types": "types/index.d.ts",
 	"exports": {
 		".": {
-			"import": "./build/postprocessing.esm.js",
-			"require": "./build/postprocessing.js",
-			"types": "./types/postprocessing.d.ts"
-		},
-		"./module": {
-			"import": "./build/postprocessing.mjs",
-			"types": "./types/postprocessing.d.ts"
+			"types": "./dist/types/index.d.ts",
+			"default": "./dist/postprocessing.js"
 		}
 	},
-	"types": "types/postprocessing.d.ts",
+	"type": "module",
 	"sideEffects": false,
 	"license": "Zlib",
 	"keywords": [
-		"rendering",
-		"image",
-		"filter",
 		"effect",
-		"composer",
+		"gbuffer",
+		"filter",
 		"pass",
+		"pipeline",
 		"post",
 		"processing",
-		"gpgpu",
-		"rtt",
+		"rendering",
 		"rendertexture",
-		"rendertarget",
-		"three"
+		"rtt",
+		"three",
+		"webgl",
+		"webgpu"
 	],
 	"author": {
 		"name": "Raoul van Rüschen",
@@ -46,47 +42,47 @@
 		"url": "https://github.com/pmndrs/postprocessing/issues"
 	},
 	"files": [
-		"build",
-		"types"
+		"dist"
 	],
 	"engines": {
-		"node": ">= 0.13.2"
+		"node": ">= 0.16.0"
 	},
 	"scripts": {
 		"ava": "ava",
 		"build:css": "sass --no-source-map -I manual/assets/css/src/values manual/assets/css/src:manual/assets/css/dist",
-		"build:js": "node esbuild.mjs",
-		"build:js:min": "node esbuild.mjs -m",
-		"clean": "del-cli build tmp manual/resources manual/assets/**/dist public",
-		"copy": "copyfiles -u 2 \"demo/static/**/*\" public/demo",
-		"deploy": "run-s copy postcss hugo gzip",
-		"doc": "esdoc",
+		"build:js": "node esbuild",
+		"build:js:min": "node esbuild -m",
+		"build:dts": "tsc -p tsconfig.d.json",
+		"clean": "del-cli dist tmp manual/resources manual/assets/**/dist public",
+		"deploy": "run-s postcss hugo gzip",
+		"doc": "typedoc",
 		"gzip": "gzipper c public",
 		"hugo": "hugo -s manual --minify",
 		"lint": "run-s lint:*",
 		"lint:css": "stylelint --fix manual/assets/css/src",
-		"lint:js": "eslint --ext .js --fix src demo/src manual/assets/js/src",
+		"lint:js": "eslint --ext .ts --fix src",
 		"postcss": "postcss manual/assets/css/dist/index.css -o manual/assets/css/dist/index.css -c manual",
 		"prepublishOnly": "run-s test doc",
-		"prewatch": "run-s clean copy build:css build:js",
-		"test": "run-s clean lint build:css build:js:min ava",
+		"prewatch": "run-s clean build:css build:js",
+		"test": "run-s lint clean build:css build:js:min ava",
 		"start": "hugo server -s manual -e development",
 		"watch": "run-p watch:* start",
 		"watch:css": "sass --no-source-map -I manual/assets/css/src/values manual/assets/css/src:manual/assets/css/dist -w",
-		"watch:eslint": "esw -w --ext .js --color src demo/src manual/assets/js/src",
-		"watch:js": "node esbuild.mjs -w"
+		"watch:tsc": "tsc --noemit --watch --preserveWatchOutput",
+		"watch:eslint": "esw -w --ext .ts --color src manual/assets/js/src",
+		"watch:js": "node esbuild -w"
 	},
 	"ava": {
 		"failFast": true,
 		"files": [
-			"test/**/*"
+			"test/**/*.js"
 		]
 	},
 	"eslintConfig": {
-		"extends": "aether"
+		"extends": "aether/typescript"
 	},
 	"peerDependencies": {
-		"three": ">= 0.125.0 < 0.149.0"
+		"three": ">= 0.147.0 < 0.149.0"
 	},
 	"devDependencies": {
 		"@tweakpane/core": "1.x.x",
@@ -95,16 +91,11 @@
 		"@typescript-eslint/parser": "5.x.x",
 		"autoprefixer": "10.x.x",
 		"ava": "5.x.x",
-		"copyfiles": "2.x.x",
 		"cssnano": "5.x.x",
-		"dat.gui": "0.x.x",
 		"del-cli": "5.x.x",
 		"esbuild": "0.x.x",
 		"esbuild-plugin-glsl": "1.x.x",
 		"esbuild-ts-paths": "1.x.x",
-		"esdoc": "1.x.x",
-		"esdoc-importpath-plugin": "1.x.x",
-		"esdoc-standard-plugin": "1.x.x",
 		"eslint": "8.x.x",
 		"eslint-config-aether": "1.x.x",
 		"eslint-watch": "8.x.x",
@@ -120,10 +111,10 @@
 		"stylelint-config-standard-scss": "6.x.x",
 		"stylelint-order": "5.x.x",
 		"three": "0.x.x",
-		"three-demo": "5.x.x",
 		"tiny-glob": "0.x.x",
 		"tslib": "2.x.x",
 		"tweakpane": "3.x.x",
+		"typedoc": "0.x.x",
 		"typescript": "4.x.x"
 	}
 }

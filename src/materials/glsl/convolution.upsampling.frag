@@ -25,7 +25,6 @@ varying vec2 vUv7;
 void main() {
 
 	vec4 c = vec4(0.0);
-
 	c += texture2D(inputBuffer, vUv0) * 0.0625;
 	c += texture2D(inputBuffer, vUv1) * 0.125;
 	c += texture2D(inputBuffer, vUv2) * 0.0625;

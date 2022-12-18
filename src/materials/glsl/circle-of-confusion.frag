@@ -1,5 +1,4 @@
 #include <common>
-#include <packing>
 
 #ifdef GL_FRAGMENT_PRECISION_HIGH
 
@@ -13,33 +12,20 @@
 
 uniform float focusDistance;
 uniform float focusRange;
-uniform float cameraNear;
-uniform float cameraFar;
+uniform vec2 cameraParams;
 
 varying vec2 vUv;
 
-float readDepth(const in vec2 uv) {
-
-	#if DEPTH_PACKING == 3201
-
-		return unpackRGBAToDepth(texture2D(depthBuffer, uv));
-
-	#else
-
-		return texture2D(depthBuffer, uv).r;
-
-	#endif
-
-}
+#define getDepth(uv) texture2D(depthBuffer, uv).r
 
 void main() {
 
-	float depth = readDepth(vUv);
+	float depth = getDepth(vUv);
 
 	#ifdef PERSPECTIVE_CAMERA
 
-		float viewZ = perspectiveDepthToViewZ(depth, cameraNear, cameraFar);
-		float linearDepth = viewZToOrthographicDepth(viewZ, cameraNear, cameraFar);
+		float viewZ = perspectiveDepthToViewZ(depth, cameraParams.x, cameraParams.y);
+		float linearDepth = viewZToOrthographicDepth(viewZ, cameraParams.x, cameraParams.y);
 
 	#else
 

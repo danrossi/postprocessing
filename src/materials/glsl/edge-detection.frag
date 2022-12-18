@@ -2,12 +2,6 @@ varying vec2 vUv;
 varying vec2 vUv0;
 varying vec2 vUv1;
 
-#if THREE_REVISION < 143
-
-	#define luminance(v) linearToRelativeLuminance(v)
-
-#endif
-
 #if EDGE_DETECTION_MODE != 0
 
 	varying vec2 vUv2;
@@ -35,25 +29,11 @@ varying vec2 vUv1;
 
 	#endif
 
-	float readDepth(const in vec2 uv) {
-
-		#if DEPTH_PACKING == 3201
-
-			return unpackRGBAToDepth(texture2D(depthBuffer, uv));
-
-		#else
-
-			return texture2D(depthBuffer, uv).r;
-
-		#endif
-
-	}
-
 	vec3 gatherNeighbors() {
 
-		float p = readDepth(vUv);
-		float pLeft = readDepth(vUv0);
-		float pTop = readDepth(vUv1);
+		float p = texture2D(depthBuffer, vUv).r;
+		float pLeft = texture2D(depthBuffer, vUv0).r;
+		float pTop = texture2D(depthBuffer, vUv1).r;
 
 		return vec3(p, pLeft, pTop);
 

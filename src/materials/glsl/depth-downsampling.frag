@@ -1,18 +1,38 @@
-#include <packing>
+#ifdef NORMAL_DEPTH
 
-#ifdef GL_FRAGMENT_PRECISION_HIGH
+	#ifdef GL_FRAGMENT_PRECISION_HIGH
 
-	uniform highp sampler2D depthBuffer;
+		uniform highp sampler2D normalDepthBuffer;
+
+	#else
+
+		uniform mediump sampler2D normalDepthBuffer;
+
+	#endif
+
+	#define getDepth(uv) texture2D(normalDepthBuffer, uv).w
+	#define getNormal(uv) texture2D(normalDepthBuffer, uv).xyz
 
 #else
 
-	uniform mediump sampler2D depthBuffer;
+	#ifdef GL_FRAGMENT_PRECISION_HIGH
 
-#endif
+		uniform highp sampler2D depthBuffer;
 
-#ifdef DOWNSAMPLE_NORMALS
+	#else
 
-	uniform lowp sampler2D normalBuffer;
+		uniform mediump sampler2D depthBuffer;
+
+	#endif
+
+	#define getDepth(uv) texture2D(depthBuffer, uv).r
+
+	#ifdef DOWNSAMPLE_NORMALS
+
+		uniform lowp sampler2D normalBuffer;
+		#define getNormal(uv) texture2D(normalBuffer, uv).xyz
+
+	#endif
 
 #endif
 
@@ -20,20 +40,6 @@ varying vec2 vUv0;
 varying vec2 vUv1;
 varying vec2 vUv2;
 varying vec2 vUv3;
-
-float readDepth(const in vec2 uv) {
-
-	#if DEPTH_PACKING == 3201
-
-		return unpackRGBAToDepth(texture2D(depthBuffer, uv));
-
-	#else
-
-		return texture2D(depthBuffer, uv).r;
-
-	#endif
-
-}
 
 /**
  * Returns the index of the most representative depth in the 2x2 neighborhood.
@@ -117,8 +123,8 @@ void main() {
 
 	// Gather depth samples in a 2x2 neighborhood.
 	float d[] = float[4](
-		readDepth(vUv0), readDepth(vUv1),
-		readDepth(vUv2), readDepth(vUv3)
+		getDepth(vUv0), getDepth(vUv1),
+		getDepth(vUv2), getDepth(vUv3)
 	);
 
 	int index = findBestDepth(d);
@@ -127,8 +133,8 @@ void main() {
 
 		// Gather all corresponding normals to avoid dependent texel fetches.
 		vec3 n[] = vec3[4](
-			texture2D(normalBuffer, vUv0).rgb, texture2D(normalBuffer, vUv1).rgb,
-			texture2D(normalBuffer, vUv2).rgb, texture2D(normalBuffer, vUv3).rgb
+			getNormal(vUv0), getNormal(vUv1),
+			getNormal(vUv2), getNormal(vUv3)
 		);
 
 	#else
