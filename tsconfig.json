@@ -1,13 +1,12 @@
 {
-	"include": ["./src", "./manual/js"],
+	"include": ["./src", "./manual/assets/js"],
 	"compilerOptions": {
 		"rootDir": ".",
 		"baseUrl": ".",
 		"paths": {
-			"postprocessing": ["./src"],
-			"temp": ["./temp"]
+			"postprocessing": ["./src"]
 		},
-		"moduleResolution": "node",
+		"moduleResolution": "NodeNext",
 		"module": "ESNext",
 		"target": "ESNext",
 		"strict": true,
@@ -18,7 +17,7 @@
 	},
 	"typedocOptions": {
 		"entryPoints": ["./src/index.ts"],
-		"out": "public/docs",
+		"out": "./public/docs",
 		"theme": "default",
 		"readme": "none",
 		"excludePrivate": true,
