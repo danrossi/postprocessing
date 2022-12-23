@@ -1,16 +1,21 @@
 import { createRequire } from "module";
 import { glsl } from "esbuild-plugin-glsl";
-import tsPaths from "esbuild-ts-paths";
+import alias from "esbuild-plugin-alias";
 import esbuild from "esbuild";
 import glob from "tiny-glob";
+import path from "path";
+import url from "url";
 
+//#region Values
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const require = createRequire(import.meta.url);
 const pkg = require("./package");
 const minify = process.argv.includes("-m");
 const watch = process.argv.includes("-w");
-const plugins = [glsl({ minify }), tsPaths()];
 const external = ["three", "spatial-controls", "tweakpane"];
 const date = new Date();
+
 const banner = `/**
  * ${pkg.name} v${pkg.version} build ${date.toDateString()}
  * ${pkg.homepage}
@@ -18,7 +23,17 @@ const banner = `/**
  * @license ${pkg.license}
  */`;
 
-// Library
+const plugins = [
+	glsl({ minify }),
+	alias({
+		"postprocessing": path.resolve(__dirname, "./src"),
+		"temp": path.resolve(__dirname, "./temp")
+	})
+];
+
+//#endregion
+
+//#region Library
 
 await esbuild.build({
 	entryPoints: await glob("src/**/worker.ts"),
@@ -43,7 +58,9 @@ await esbuild.build({
 	plugins
 }).catch(() => process.exit(1));
 
-// Manual
+//#endregion
+
+//#region Manual
 
 await esbuild.build({
 	entryPoints: ["manual/assets/js/libs/vendor.ts"],
@@ -69,3 +86,5 @@ await esbuild.build({
 	minify,
 	watch
 }).catch(() => process.exit(1));
+
+//#endregion
