@@ -1,5 +1,6 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, UnsignedByteType } from "three";
-import { ColorChannel, MaskFunction } from "../enums";
+import { ColorChannel } from "../enums/ColorChannel.js";
+import { MaskFunction } from "../enums/MaskFunction.js";
 
 import fragmentShader from "./glsl/mask.frag";
 import vertexShader from "./glsl/common.vert";
@@ -42,7 +43,7 @@ export class MaskMaterial extends ShaderMaterial {
 	 * The input buffer.
 	 */
 
-	set inputBuffer(value: Texture) {
+	set inputBuffer(value: Texture | null) {
 
 		this.uniforms.inputBuffer.value = value;
 
@@ -52,12 +53,12 @@ export class MaskMaterial extends ShaderMaterial {
 	 * The mask texture.
 	 */
 
-	set maskTexture(value: Texture) {
+	set maskTexture(value: Texture | null) {
 
 		this.uniforms.maskTexture.value = value;
 		delete this.defines.MASK_PRECISION_HIGH;
 
-		if(value.type !== UnsignedByteType) {
+		if(value?.type !== UnsignedByteType) {
 
 			this.defines.MASK_PRECISION_HIGH = "1";
 
@@ -125,7 +126,7 @@ export class MaskMaterial extends ShaderMaterial {
 
 	get strength(): number {
 
-		return this.uniforms.strength.value;
+		return this.uniforms.strength.value as number;
 
 	}
 

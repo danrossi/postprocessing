@@ -1,6 +1,7 @@
 import { Uniform, WebGLRenderTarget } from "three";
-import { GBuffer } from "../enums";
-import { BufferedEventDispatcher, ObservableMap } from "../utils";
+import { GBuffer } from "../enums/GBuffer.js";
+import { BufferedEventDispatcher } from "../utils/BufferedEventDispatcher.js";
+import { ObservableMap } from "../utils/ObservableMap.js";
 
 /**
  * Output resources.

@@ -1,3 +1,3 @@
-export * from "./blending";
+export * from "./blending/index.js";
 
-export * from "./Effect";
+export * from "./Effect.js";

@@ -1,6 +1,13 @@
 import { LoadingManager } from "three";
-import { RawImageData } from "../RawImageData";
-import workerProgram from "../../../tmp/smaa/worker.txt";
+import { RawImageData } from "../RawImageData.js";
+import workerProgram from "temp/smaa/worker.txt";
+
+interface SMAAImageData {
+
+	searchImageData: ImageData;
+	areaImageData: ImageData;
+
+}
 
 /**
  * Generates the SMAA data images.
@@ -21,7 +28,7 @@ function generate(useCache = true): Promise<string[]> {
 	return new Promise((resolve, reject) => {
 
 		worker.addEventListener("error", (event) => reject(event.error));
-		worker.addEventListener("message", (event) => {
+		worker.addEventListener("message", (event: MessageEvent<SMAAImageData>) => {
 
 			const searchImageData = RawImageData.from(event.data.searchImageData);
 			const areaImageData = RawImageData.from(event.data.areaImageData);
@@ -52,7 +59,7 @@ function generate(useCache = true): Promise<string[]> {
  * An SMAA image generator.
  *
  * This class uses a worker thread to generate the search and area images. The generated data URLs will be cached using
- * localStorage, if available. To disable caching use {@link SMAAImageGenerator.setCacheEnabled}.
+ * localStorage, if available. To disable caching set {@link cacheEnabled} to `false`.
  */
 
 export class SMAAImageGenerator {

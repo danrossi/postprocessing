@@ -1,5 +1,5 @@
 import { ShaderMaterial } from "three";
-import { Pass } from "../core";
+import { Pass } from "../core/Pass.js";
 
 /**
  * A pass that renders a given shader material as a fullscreen effect.

@@ -1,5 +1,5 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector4 } from "three";
-import { Resizable } from "../core";
+import { Resizable } from "../core/Resizable.js";
 
 import fragmentShader from "./glsl/smaa-weights.frag";
 import vertexShader from "./glsl/smaa-weights.vert";
@@ -71,13 +71,13 @@ export class SMAAWeightsMaterial extends ShaderMaterial implements Resizable {
 	 * The search lookup texture.
 	 */
 
-	get searchTexture(): Texture {
+	get searchTexture(): Texture | null {
 
-		return this.uniforms.searchTexture.value;
+		return this.uniforms.searchTexture.value as Texture;
 
 	}
 
-	set searchTexture(value: Texture) {
+	set searchTexture(value: Texture | null) {
 
 		this.uniforms.searchTexture.value = value;
 
@@ -87,13 +87,13 @@ export class SMAAWeightsMaterial extends ShaderMaterial implements Resizable {
 	 * The area lookup texture.
 	 */
 
-	get areaTexture(): Texture {
+	get areaTexture(): Texture | null {
 
-		return this.uniforms.areaTexture.value;
+		return this.uniforms.areaTexture.value as Texture;
 
 	}
 
-	set areaTexture(value: Texture) {
+	set areaTexture(value: Texture | null) {
 
 		this.uniforms.areaTexture.value = value;
 

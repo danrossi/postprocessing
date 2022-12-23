@@ -1,7 +1,7 @@
 import { FloatType, Vector2, Vector3 } from "three";
-import { DepthCopyMode } from "../enums";
-import { unpackRGBAToFloat } from "../utils";
-import { DepthCopyPass } from "./DepthCopyPass";
+import { DepthCopyMode } from "../enums/DepthCopyMode.js";
+import { unpackRGBAToFloat } from "../utils/packing.js";
+import { DepthCopyPass } from "./DepthCopyPass.js";
 
 const floatPixelBuffer = new Float32Array(4);
 const uint8PixelBuffer = new Uint8Array(4);

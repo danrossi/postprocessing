@@ -6,7 +6,7 @@ import { Object3D } from "three";
  * Object selections use render layers to facilitate quick and efficient visibility changes.
  */
 
-export class Selection extends Set {
+export class Selection extends Set<Object3D> {
 
 	/**
 	 * @see {@link layer}

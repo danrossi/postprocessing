@@ -1,5 +1,5 @@
 import { FileLoader, Loader, LoadingManager, Vector3 } from "three";
-import { LookupTexture } from "../textures";
+import { LookupTexture } from "../textures/lut/LookupTexture.js";
 
 /**
  * A 3D LUT loader that supports the .cube file format.
@@ -21,8 +21,8 @@ export class LUTCubeLoader extends Loader {
 	 * @return A promise that returns the lookup texture.
 	 */
 
-	async load(url: string, onLoad = (result: LookupTexture) => {}, onProgress = () => {},
-		onError?: CallableFunction): Promise<LookupTexture> {
+	async load(url: string, onLoad = (_: LookupTexture) => {}, onProgress = () => {},
+		onError = (_: string) => {}): Promise<LookupTexture> {
 
 		const externalManager = this.manager;
 		const internalManager = new LoadingManager();

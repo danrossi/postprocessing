@@ -1,6 +1,9 @@
-import { LinearEncoding, TextureEncoding, Uniform } from "three";
-import { BlendFunction, EffectAttribute, EffectShaderSection, WebGLExtension } from "../enums";
-import { BlendMode } from "../effects/blending";
+import { ColorSpace, LinearEncoding, TextureEncoding, Uniform } from "three";
+import { BlendFunction } from "../enums/BlendFunction.js";
+import { EffectAttribute } from "../enums/EffectAttribute.js";
+import { EffectShaderSection } from "../enums/EffectShaderSection.js";
+import { WebGLExtension } from "../enums/WebGLExtension.js";
+import { BlendMode } from "../effects/blending/BlendMode.js";
 
 /**
  * A collection of shader data.
@@ -68,7 +71,7 @@ export class EffectShaderData {
 	 * Keeps track of the current color space.
 	 */
 
-	colorSpace: TextureEncoding;
+	colorSpace: ColorSpace;
 
 	/**
 	 * Constructs new shader data.
@@ -92,7 +95,7 @@ export class EffectShaderData {
 		this.attributes = EffectAttribute.NONE;
 		this.uvTransformation = false;
 		this.readDepth = false;
-		this.colorSpace = LinearEncoding;
+		this.colorSpace = "srgb-linear";
 
 	}
 

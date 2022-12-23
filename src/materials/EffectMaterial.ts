@@ -9,9 +9,9 @@ import {
 	Vector4
 } from "three";
 
-import { Resizable } from "../core";
-import { EffectShaderSection, EffectShaderSection as Section, WebGLExtension } from "../enums";
-import { EffectShaderData } from "../utils";
+import { Resizable } from "../core/Resizable.js";
+import { EffectShaderSection, EffectShaderSection as Section } from "../enums/EffectShaderSection.js";
+import { WebGLExtension } from "../enums/index.js";
 
 import fragmentTemplate from "./glsl/effect.frag";
 import vertexTemplate from "./glsl/effect.vert";
@@ -58,29 +58,13 @@ export class EffectMaterial extends ShaderMaterial implements Resizable {
 	}
 
 	/**
-	 * Sets the shader data.
-	 *
-	 * @param data - The shader data.
-	 * @return This material.
-	 */
-
-	setShaderData(data: EffectShaderData): this {
-
-		return this.setShaderParts(data.shaderParts)
-			.setDefines(data.defines)
-			.setUniforms(data.uniforms)
-			.setExtensions(data.extensions);
-
-	}
-
-	/**
 	 * Sets the shader parts.
 	 *
 	 * @param shaderParts - A collection of shader code snippets. See {@link EffectShaderSection}.
 	 * @return This material.
 	 */
 
-	private setShaderParts(shaderParts: Map<EffectShaderSection, string | null>): this {
+	setShaderParts(shaderParts: Map<EffectShaderSection, string | null>): this {
 
 		this.fragmentShader = fragmentTemplate
 			.replace(Section.FRAGMENT_HEAD, shaderParts.get(Section.FRAGMENT_HEAD) ?? "")
@@ -103,7 +87,7 @@ export class EffectMaterial extends ShaderMaterial implements Resizable {
 	 * @return This material.
 	 */
 
-	private setDefines(defines: Map<string, string>): this {
+	setDefines(defines: Map<string, string>): this {
 
 		for(const entry of defines.entries()) {
 
@@ -123,7 +107,7 @@ export class EffectMaterial extends ShaderMaterial implements Resizable {
 	 * @return This material.
 	 */
 
-	private setUniforms(uniforms: Map<string, Uniform>): this {
+	setUniforms(uniforms: Map<string, Uniform>): this {
 
 		for(const entry of uniforms.entries()) {
 
@@ -142,7 +126,7 @@ export class EffectMaterial extends ShaderMaterial implements Resizable {
 	 * @return This material.
 	 */
 
-	private setExtensions(extensions: Set<WebGLExtension>): this {
+	setExtensions(extensions: Set<WebGLExtension>): this {
 
 		for(const extension of extensions) {
 
@@ -190,7 +174,7 @@ export class EffectMaterial extends ShaderMaterial implements Resizable {
 
 	get time(): number {
 
-		return this.uniforms.time.value;
+		return this.uniforms.time.value as number;
 
 	}
 

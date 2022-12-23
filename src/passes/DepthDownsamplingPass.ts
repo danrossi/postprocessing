@@ -1,8 +1,8 @@
 import { FloatType, NearestFilter, Texture, WebGLRenderer, WebGLRenderTarget } from "three";
-import { Pass } from "../core";
-import { GBuffer } from "../enums";
-import { DepthDownsamplingMaterial } from "../materials";
-import { Resolution } from "../utils";
+import { Pass } from "../core/Pass.js";
+import { GBuffer } from "../enums/GBuffer.js";
+import { DepthDownsamplingMaterial } from "../materials/DepthDownsamplingMaterial.js";
+import { Resolution } from "../utils/Resolution.js";
 
 /**
  * A downsampling pass that picks the most representative depth (and normal) in 2x2 texel neighborhoods.

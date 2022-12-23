@@ -12,18 +12,46 @@ import {
 	Vector3
 } from "three";
 
-import { RawImageData } from "../RawImageData";
-import workerProgram from "tmp/lut/worker.txt";
-
-const c = new Color();
+import { RawImageData } from "../RawImageData.js";
+import workerProgram from "temp/lut/worker.txt";
 
 /**
- * A 3D lookup texture (LUT).
- *
- * This texture can be used as-is in a WebGL 2 context. It can also be converted into a 2D texture.
+ * 3D image data.
  */
 
-export class LookupTexture extends Data3DTexture {
+interface Image3DData {
+
+	/**
+	 * The image data.
+	 */
+
+	data: Uint8Array | Float32Array;
+
+	/**
+	 * The width in pixels.
+	 */
+
+	width: number;
+
+	/**
+	 * The height in pixels.
+	 */
+
+	height: number;
+
+	/**
+	 * The depth in pixels.
+	 */
+
+	depth: number;
+
+}
+
+/**
+ * LUT input domain bounds.
+ */
+
+export interface LUTDomainBounds {
 
 	/**
 	 * The lower bounds of the input domain.
@@ -35,6 +63,21 @@ export class LookupTexture extends Data3DTexture {
 	 * The upper bounds of the input domain.
 	 */
 
+	domainMax: Vector3;
+
+}
+
+const c = new Color();
+
+/**
+ * A 3D lookup texture (LUT).
+ *
+ * This texture can be used as-is in a WebGL 2 context. It can also be converted into a 2D texture.
+ */
+
+export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
+
+	domainMin: Vector3;
 	domainMax: Vector3;
 
 	/**
@@ -68,7 +111,7 @@ export class LookupTexture extends Data3DTexture {
 
 	async scaleUp(size: number, transferData = true): Promise<LookupTexture> {
 
-		const image = this.image;
+		const image = this.image as Image3DData;
 		let promise;
 
 		if(size <= image.width) {
@@ -85,7 +128,7 @@ export class LookupTexture extends Data3DTexture {
 
 				const worker = new Worker(workerURL);
 				worker.addEventListener("error", (event) => reject(event.error));
-				worker.addEventListener("message", (event) => {
+				worker.addEventListener("message", (event: MessageEvent<ArrayBufferView>) => {
 
 					const lut = new LookupTexture(event.data, size);
 					lut.encoding = this.encoding;
@@ -121,8 +164,8 @@ export class LookupTexture extends Data3DTexture {
 
 	applyLUT(lut: LookupTexture): this {
 
-		const img0 = this.image;
-		const img1 = lut.image;
+		const img0 = this.image as Image3DData;
+		const img1 = lut.image as Image3DData;
 
 		const size0 = Math.min(img0.width, img0.height, img0.depth);
 		const size1 = Math.min(img1.width, img1.height, img1.depth);
@@ -141,8 +184,8 @@ export class LookupTexture extends Data3DTexture {
 
 		} else {
 
-			const data0 = img0.data as number[];
-			const data1 = img1.data as number[];
+			const data0 = img0.data;
+			const data1 = img1.data;
 			const size = size0;
 			const sizeSq = size ** 2;
 			const s = size - 1;
@@ -181,7 +224,8 @@ export class LookupTexture extends Data3DTexture {
 
 		if(this.type === FloatType) {
 
-			const floatData = this.image.data as Float32Array;
+			const img = this.image as Image3DData;
+			const floatData = img.data;
 			const uint8Data = new Uint8Array(floatData.length);
 
 			for(let i = 0, l = floatData.length; i < l; ++i) {
@@ -190,7 +234,7 @@ export class LookupTexture extends Data3DTexture {
 
 			}
 
-			this.image.data = uint8Data;
+			img.data = uint8Data;
 			this.type = UnsignedByteType;
 			this.needsUpdate = true;
 
@@ -210,7 +254,8 @@ export class LookupTexture extends Data3DTexture {
 
 		if(this.type === UnsignedByteType) {
 
-			const uint8Data = this.image.data;
+			const img = this.image as Image3DData;
+			const uint8Data = img.data;
 			const floatData = new Float32Array(uint8Data.length);
 
 			for(let i = 0, l = uint8Data.length; i < l; ++i) {
@@ -219,7 +264,7 @@ export class LookupTexture extends Data3DTexture {
 
 			}
 
-			this.image.data = floatData;
+			img.data = floatData;
 			this.type = FloatType;
 			this.needsUpdate = true;
 
@@ -237,7 +282,8 @@ export class LookupTexture extends Data3DTexture {
 
 	convertLinearToSRGB(): this {
 
-		const data = this.image.data;
+		const img = this.image as Image3DData;
+		const data = img.data;
 
 		if(this.type === FloatType) {
 
@@ -268,7 +314,8 @@ export class LookupTexture extends Data3DTexture {
 
 	convertSRGBToLinear(): this {
 
-		const data = this.image.data;
+		const img = this.image as Image3DData;
+		const data = img.data;
 
 		if(this.type === FloatType) {
 
@@ -294,17 +341,18 @@ export class LookupTexture extends Data3DTexture {
 	/**
 	 * Converts this LUT into a 2D data texture.
 	 *
-	 * Custom input domains are stored in `userData` as `domainMin` and `domainMax`.
+	 * Custom {@link LUTDomainBounds} are stored in {@link Texture.userData} as `domainBounds`.
 	 *
 	 * @return The texture.
 	 */
 
 	toDataTexture(): DataTexture {
 
-		const width = this.image.width;
-		const height = this.image.height * this.image.depth;
+		const img = this.image as Image3DData;
+		const width = img.width;
+		const height = img.height * img.depth;
 
-		const texture = new DataTexture(this.image.data, width, height);
+		const texture = new DataTexture(img.data, width, height);
 		texture.name = this.name;
 		texture.type = this.type;
 		texture.format = this.format;
@@ -315,7 +363,9 @@ export class LookupTexture extends Data3DTexture {
 		texture.wrapT = this.wrapT;
 		texture.generateMipmaps = false;
 		texture.needsUpdate = true;
-		texture.userData = {
+
+		const userData = texture.userData as Record<string, unknown>;
+		userData.domainBounds = {
 			domainMin: this.domainMin,
 			domainMax: this.domainMax
 		};
@@ -335,11 +385,11 @@ export class LookupTexture extends Data3DTexture {
 
 	static from(texture: Texture): LookupTexture {
 
-		const image = texture.image;
+		const image = texture.image as ImageData;
 		const { width, height } = image;
 		const size = Math.min(width, height);
 
-		let data: Uint8Array;
+		let data: Uint8Array | Uint8ClampedArray;
 
 		if(image instanceof Image) {
 
@@ -385,7 +435,7 @@ export class LookupTexture extends Data3DTexture {
 
 		} else {
 
-			data = image.data.slice() as Uint8Array; // or Float32Array
+			data = image.data.slice();
 
 		}
 
@@ -393,6 +443,16 @@ export class LookupTexture extends Data3DTexture {
 		lut.encoding = texture.encoding;
 		lut.type = texture.type;
 		lut.name = texture.name;
+
+		const userData = texture.userData as Record<string, unknown>;
+
+		if(userData.domainBounds !== undefined) {
+
+			const domainData = userData.domainBounds as LUTDomainBounds;
+			lut.domainMin.copy(domainData.domainMin);
+			lut.domainMax.copy(domainData.domainMax);
+
+		}
 
 		return lut;
 

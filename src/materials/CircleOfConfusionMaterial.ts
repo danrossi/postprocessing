@@ -1,5 +1,6 @@
 import { NoBlending, OrthographicCamera, PerspectiveCamera, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
-import { orthographicDepthToViewZ, viewZToOrthographicDepth } from "../utils";
+import { orthographicDepthToViewZ } from "../utils/orthographicDepthToViewZ.js";
+import { viewZToOrthographicDepth } from "../utils/viewZToOrthographicDepth.js";
 
 import fragmentShader from "./glsl/circle-of-confusion.frag";
 import vertexShader from "./glsl/common.vert";
@@ -40,7 +41,7 @@ export class CircleOfConfusionMaterial extends ShaderMaterial {
 
 	private get near(): number {
 
-		return this.uniforms.cameraNear.value;
+		return this.uniforms.cameraNear.value as number;
 
 	}
 
@@ -50,7 +51,7 @@ export class CircleOfConfusionMaterial extends ShaderMaterial {
 
 	private get far(): number {
 
-		return this.uniforms.cameraFar.value;
+		return this.uniforms.cameraFar.value as number;
 
 	}
 
@@ -70,7 +71,7 @@ export class CircleOfConfusionMaterial extends ShaderMaterial {
 
 	get focusDistance(): number {
 
-		return this.uniforms.focusDistance.value;
+		return this.uniforms.focusDistance.value as number;
 
 	}
 
@@ -102,7 +103,7 @@ export class CircleOfConfusionMaterial extends ShaderMaterial {
 
 	get focusRange(): number {
 
-		return this.uniforms.focusRange.value;
+		return this.uniforms.focusRange.value as number;
 
 	}
 

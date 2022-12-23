@@ -1,5 +1,5 @@
-import { lerp } from "../../utils";
-import { RawImageData } from "../RawImageData";
+import { lerp } from "../../utils/math.js";
+import { RawImageData } from "../RawImageData.js";
 
 /**
  * Maps edges to bilinear fetch cases (reverse lookup of the bilinear function).

@@ -1,6 +1,6 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector4 } from "three";
-import { Resizable } from "../core";
-import { KernelSize } from "../enums";
+import { Resizable } from "../core/Resizable.js";
+import { KernelSize } from "../enums/KernelSize.js";
 
 import fragmentShader from "./glsl/convolution.kawase.frag";
 import vertexShader from "./glsl/convolution.kawase.vert";
@@ -62,7 +62,7 @@ export class KawaseBlurMaterial extends ShaderMaterial implements Resizable {
 	 * The input buffer.
 	 */
 
-	set inputBuffer(value: Texture) {
+	set inputBuffer(value: Texture | null) {
 
 		this.uniforms.inputBuffer.value = value;
 
@@ -84,7 +84,7 @@ export class KawaseBlurMaterial extends ShaderMaterial implements Resizable {
 
 	get scale(): number {
 
-		return this.uniforms.scale.value;
+		return this.uniforms.scale.value as number;
 
 	}
 
@@ -100,7 +100,7 @@ export class KawaseBlurMaterial extends ShaderMaterial implements Resizable {
 
 	get kernel(): number {
 
-		return this.uniforms.kernel.value;
+		return this.uniforms.kernel.value as number;
 
 	}
 
@@ -113,7 +113,8 @@ export class KawaseBlurMaterial extends ShaderMaterial implements Resizable {
 	setSize(width: number, height: number): void {
 
 		const x = 1.0 / width, y = 1.0 / height;
-		this.uniforms.texelSize.value.set(x, y, x * 0.5, y * 0.5);
+		const texelSize = this.uniforms.texelSize.value as Vector4;
+		texelSize.set(x, y, x * 0.5, y * 0.5);
 
 	}
 

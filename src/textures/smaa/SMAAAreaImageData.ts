@@ -1,5 +1,5 @@
-import { lerp, saturate } from "../../utils";
-import { RawImageData } from "../RawImageData";
+import { lerp, saturate } from "../../utils/math.js";
+import { RawImageData } from "../RawImageData.js";
 
 /**
  * An 2D area, described by lower and upper bounds.

@@ -1,8 +1,8 @@
 import { WebGLRenderTarget } from "three";
-import { Pass } from "../core";
-import { GBuffer } from "../enums";
-import { LuminanceMaterial } from "../materials";
-import { Resolution } from "../utils";
+import { Pass } from "../core/Pass.js";
+import { GBuffer } from "../enums/GBuffer.js";
+import { LuminanceMaterial } from "../materials/LuminanceMaterial.js";
+import { Resolution } from "../utils/Resolution.js";
 
 /**
  * A luminance pass.

@@ -1,5 +1,5 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
-import { Resizable } from "../core";
+import { Resizable } from "../core/Resizable.js";
 
 import fragmentShader from "./glsl/depth-downsampling.frag";
 import vertexShader from "./glsl/depth-downsampling.vert";
@@ -70,7 +70,8 @@ export class DepthDownsamplingMaterial extends ShaderMaterial implements Resizab
 
 	setSize(width: number, height: number): void {
 
-		this.uniforms.texelSize.value.set(1.0 / width, 1.0 / height);
+		const texelSize = this.uniforms.texelSize.value as Vector2;
+		texelSize.set(1.0 / width, 1.0 / height);
 
 	}
 

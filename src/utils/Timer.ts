@@ -1,5 +1,5 @@
-import { Disposable } from "../core";
-import { ImmutableTimer } from "./ImmutableTimer";
+import { Disposable } from "../core/Disposable.js";
+import { ImmutableTimer } from "./ImmutableTimer.js";
 
 const MILLISECONDS_TO_SECONDS = 1.0 / 1e3;
 const SECONDS_TO_MILLISECONDS = 1e3;

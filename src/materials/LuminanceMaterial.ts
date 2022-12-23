@@ -56,7 +56,7 @@ export class LuminanceMaterial extends ShaderMaterial {
 
 	get threshold(): number {
 
-		return this.uniforms.threshold.value;
+		return this.uniforms.threshold.value as number;
 
 	}
 
@@ -82,7 +82,7 @@ export class LuminanceMaterial extends ShaderMaterial {
 
 	get smoothing(): number {
 
-		return this.uniforms.smoothing.value;
+		return this.uniforms.smoothing.value as number;
 
 	}
 

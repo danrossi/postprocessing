@@ -1,4 +1,4 @@
-import { Pass } from "../core";
+import { Pass } from "../core/Pass.js";
 
 /**
  * A pass that executes a given function.

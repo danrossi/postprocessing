@@ -1,6 +1,7 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
-import { Resizable } from "../core";
-import { EdgeDetectionMode, PredicationMode } from "../enums";
+import { Resizable } from "../core/Resizable.js";
+import { EdgeDetectionMode } from "../enums/EdgeDetectionMode.js";
+import { PredicationMode } from "../enums/PredicationMode.js";
 
 import fragmentShader from "./glsl/edge-detection.frag";
 import vertexShader from "./glsl/edge-detection.vert";
@@ -51,7 +52,7 @@ export class EdgeDetectionMaterial extends ShaderMaterial implements Resizable {
 	 * The depth buffer.
 	 */
 
-	set depthBuffer(value: Texture) {
+	set depthBuffer(value: Texture | null) {
 
 		this.uniforms.depthBuffer.value = value;
 
@@ -210,7 +211,8 @@ export class EdgeDetectionMaterial extends ShaderMaterial implements Resizable {
 
 	setSize(width: number, height: number): void {
 
-		this.uniforms.texelSize.value.set(1.0 / width, 1.0 / height);
+		const texelSize = this.uniforms.texelSize.value as Vector2;
+		texelSize.set(1.0 / width, 1.0 / height);
 
 	}
 

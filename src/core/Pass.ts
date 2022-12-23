@@ -11,11 +11,13 @@ import {
 	WebGLRenderer
 } from "three";
 
-import { ImmutableTimer, Log, Resolution } from "../utils";
-import { Disposable } from "./Disposable";
-import { Input } from "./Input";
-import { Output } from "./Output";
-import { Renderable } from "./Renderable";
+import { ImmutableTimer } from "../utils/ImmutableTimer.js";
+import { Log } from "../utils/Log.js";
+import { Resolution } from "../utils/Resolution.js";
+import { Disposable } from "./Disposable.js";
+import { Input } from "./Input.js";
+import { Output } from "./Output.js";
+import { Renderable } from "./Renderable.js";
 
 /**
  * An abstract pass.

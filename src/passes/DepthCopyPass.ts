@@ -1,8 +1,8 @@
 import { FloatType, NearestFilter, Texture, WebGLRenderTarget } from "three";
-import { Pass } from "../core";
-import { GBuffer } from "../enums";
-import { DepthCopyMaterial } from "../materials";
-import { Resolution } from "../utils";
+import { Pass } from "../core/Pass.js";
+import { GBuffer } from "../enums/GBuffer.js";
+import { DepthCopyMaterial } from "../materials/DepthCopyMaterial.js";
+import { Resolution } from "../utils/Resolution.js";
 
 /**
  * A pass that copies depth into a render target.

@@ -1,8 +1,11 @@
-import { LinearEncoding, TextureEncoding, Uniform } from "three";
-import { Pass } from "../core";
-import { BlendFunction, EffectAttribute, WebGLExtension } from "../enums";
-import { ObservableMap, ObservableSet } from "../utils";
-import { BlendMode } from "./blending";
+import { ColorSpace, TextureEncoding, Uniform } from "three";
+import { Pass } from "../core/Pass.js";
+import { BlendFunction } from "../enums/BlendFunction.js";
+import { EffectAttribute } from "../enums/EffectAttribute.js";
+import { WebGLExtension } from "../enums/WebGLExtension.js";
+import { ObservableMap } from "../utils/ObservableMap.js";
+import { ObservableSet } from "../utils/ObservableSet.js";
+import { BlendMode } from "./blending/BlendMode.js";
 
 /**
  * An abstract effect.
@@ -58,13 +61,13 @@ export abstract class Effect extends Pass {
 	 * @see {@link inputColorSpace}
 	 */
 
-	private _inputColorSpace: TextureEncoding | null;
+	private _inputColorSpace: ColorSpace;
 
 	/**
 	 * @see {@link outputColorSpace}
 	 */
 
-	private _outputColorSpace: TextureEncoding | null;
+	private _outputColorSpace: ColorSpace;
 
 	/**
 	 * Constructs a new effect.
@@ -93,8 +96,8 @@ export abstract class Effect extends Pass {
 		this._attributes = EffectAttribute.NONE;
 		this._fragmentShader = null;
 		this._vertexShader = null;
-		this._inputColorSpace = LinearEncoding;
-		this._outputColorSpace = null;
+		this._inputColorSpace = "";
+		this._outputColorSpace = "";
 
 	}
 
@@ -133,18 +136,18 @@ export abstract class Effect extends Pass {
 	}
 
 	/**
-	 * The input color space. Default is `LinearEncoding`.
+	 * The input color space. Default is `NoColorSpace`, meaning no change.
 	 *
 	 * Ensures that the input colors are in the specified color space, converting them if necessary.
 	 */
 
-	get inputColorSpace(): TextureEncoding | null {
+	get inputColorSpace(): ColorSpace {
 
 		return this._inputColorSpace;
 
 	}
 
-	set inputColorSpace(value: TextureEncoding | null) {
+	set inputColorSpace(value: ColorSpace) {
 
 		this._inputColorSpace = value;
 		this.setChanged();
@@ -152,18 +155,18 @@ export abstract class Effect extends Pass {
 	}
 
 	/**
-	 * The output color space. Default is `null`.
+	 * The output color space. Default is `NoColorSpace`, meaning no change.
 	 *
 	 * Should only be defined if this effect converts the input colors to a different color space.
 	 */
 
-	get outputColorSpace(): TextureEncoding | null {
+	get outputColorSpace(): ColorSpace {
 
 		return this._outputColorSpace;
 
 	}
 
-	set outputColorSpace(value: TextureEncoding | null) {
+	set outputColorSpace(value: ColorSpace) {
 
 		this._outputColorSpace = value;
 		this.setChanged();

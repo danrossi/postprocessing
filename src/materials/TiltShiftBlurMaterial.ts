@@ -1,6 +1,6 @@
 import { Uniform, Vector2, Vector4 } from "three";
-import { KernelSize } from "../enums";
-import { KawaseBlurMaterial } from "./KawaseBlurMaterial";
+import { KernelSize } from "../enums/KernelSize.js";
+import { KawaseBlurMaterial } from "./KawaseBlurMaterial.js";
 
 import fragmentShader from "./glsl/convolution.tilt-shift.frag";
 import vertexShader from "./glsl/convolution.tilt-shift.vert";
@@ -106,7 +106,7 @@ export class TiltShiftBlurMaterial extends KawaseBlurMaterial {
 
 	private updateParams(): void {
 
-		const params = this.uniforms.maskParams.value;
+		const params = this.uniforms.maskParams.value as Vector4;
 		const a = Math.max(this.focusArea, 0.0);
 		const b = Math.max(a - this.feather, 0.0);
 
@@ -123,13 +123,15 @@ export class TiltShiftBlurMaterial extends KawaseBlurMaterial {
 
 	get rotation(): number {
 
-		return Math.acos(this.uniforms.rotation.value.x);
+		const rotation = this.uniforms.rotation.value as Vector2;
+		return Math.acos(rotation.x);
 
 	}
 
 	set rotation(value: number) {
 
-		this.uniforms.rotation.value.set(Math.cos(value), Math.sin(value));
+		const rotation = this.uniforms.rotation.value as Vector2;
+		rotation.set(Math.cos(value), Math.sin(value));
 
 	}
 

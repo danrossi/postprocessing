@@ -1,5 +1,5 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
-import { DepthCopyMode } from "../enums";
+import { DepthCopyMode } from "../enums/DepthCopyMode.js";
 
 import fragmentShader from "./glsl/depth-copy.frag";
 import vertexShader from "./glsl/depth-copy.vert";
@@ -49,7 +49,7 @@ export class DepthCopyMaterial extends ShaderMaterial {
 
 	get depthBuffer(): Texture | null {
 
-		return this.uniforms.depthBuffer.value;
+		return this.uniforms.depthBuffer.value as Texture;
 
 	}
 
@@ -65,7 +65,7 @@ export class DepthCopyMaterial extends ShaderMaterial {
 
 	get texelPosition(): Vector2 {
 
-		return this.uniforms.texelPosition.value;
+		return this.uniforms.texelPosition.value as Vector2;
 
 	}
 

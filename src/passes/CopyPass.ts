@@ -1,7 +1,7 @@
 import { WebGLRenderTarget } from "three";
-import { Pass } from "../core";
-import { CopyMaterial } from "../materials";
-import { Resolution } from "../utils";
+import { Pass } from "../core/Pass.js";
+import { CopyMaterial } from "../materials/CopyMaterial.js";
+import { Resolution } from "../utils/Resolution.js";
 
 /**
  * Copies the contents of the default input buffer to another buffer.

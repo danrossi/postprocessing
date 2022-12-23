@@ -1,6 +1,6 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
-import { Resizable } from "../core";
-import { GaussKernel } from "../utils";
+import { Resizable } from "../core/Resizable.js";
+import { GaussKernel } from "../utils/GaussKernel.js";
 
 import fragmentShader from "./glsl/convolution.gaussian.frag";
 import vertexShader from "./glsl/convolution.gaussian.vert";
@@ -99,7 +99,7 @@ export class GaussianBlurMaterial extends ShaderMaterial implements Resizable {
 
 	get direction(): Vector2 {
 
-		return this.uniforms.direction.value;
+		return this.uniforms.direction.value as Vector2;
 
 	}
 
@@ -109,7 +109,7 @@ export class GaussianBlurMaterial extends ShaderMaterial implements Resizable {
 
 	get scale(): number {
 
-		return this.uniforms.scale.value;
+		return this.uniforms.scale.value as number;
 
 	}
 
@@ -148,7 +148,8 @@ export class GaussianBlurMaterial extends ShaderMaterial implements Resizable {
 
 	setSize(width: number, height: number): void {
 
-		this.uniforms.texelSize.value.set(1.0 / width, 1.0 / height);
+		const texelSize = this.uniforms.texelSize.value as Vector2;
+		texelSize.set(1.0 / width, 1.0 / height);
 
 	}
 

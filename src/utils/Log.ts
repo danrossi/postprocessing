@@ -1,4 +1,4 @@
-import { LogLevel } from "../enums";
+import { LogLevel } from "../enums/LogLevel.js";
 
 /**
  * A simple logging helper.
@@ -7,7 +7,7 @@ import { LogLevel } from "../enums";
 export abstract class Log {
 
 	/**
-	 * The current log level. Default is {@link Log.LEVEL_ERROR}.
+	 * The current log level. Default is {@link LogLevel.ERROR}.
 	 */
 
 	static level = LogLevel.ERROR;

@@ -7,11 +7,15 @@ import {
 	PerspectiveCamera
 } from "three";
 
-import { Pass } from "../core";
-import { Effect } from "../effects";
-import { BlendFunction, EffectAttribute, EffectShaderSection as Section } from "../enums";
-import { EffectMaterial } from "../materials";
-import { EffectShaderData, Log, Resolution } from "../utils";
+import { Pass } from "../core/Pass.js";
+import { Effect } from "../effects/Effect.js";
+import { BlendFunction } from "../enums/BlendFunction.js";
+import { EffectAttribute } from "../enums/EffectAttribute.js";
+import { EffectShaderSection as Section } from "../enums/EffectShaderSection.js";
+import { EffectMaterial } from "../materials/EffectMaterial.js";
+import { EffectShaderData } from "../utils/EffectShaderData.js";
+import { Log } from "../utils/Log.js";
+import { Resolution } from "../utils/Resolution.js";
 
 /**
  * Prefixes substrings within the given strings.
@@ -170,7 +174,7 @@ function integrateEffect(prefix: string, effect: Effect, data: EffectShaderData)
 
 			if(effect.inputColorSpace !== null && effect.inputColorSpace !== data.colorSpace) {
 
-				fragmentMainImage += (effect.inputColorSpace === sRGBEncoding) ?
+				fragmentMainImage += (effect.inputColorSpace === "srgb") ?
 					"color0 = LinearTosRGB(color0);\n\t" :
 					"color0 = sRGBToLinear(color0);\n\t";
 
@@ -186,7 +190,7 @@ function integrateEffect(prefix: string, effect: Effect, data: EffectShaderData)
 
 			}
 
-			const depthParamRegExp = /MainImage *\([\w\s,]*?depth[\w\s,]*?\)/;
+			// const depthParamRegExp = /MainImage *\([\w\s,]*?depth[\w\s,]*?\)/;
 			fragmentMainImage += `${prefix}MainImage(color0, UV, `;
 
 			// Check if the effect reads depth in the fragment shader.
@@ -430,7 +434,7 @@ export class EffectPass extends Pass<EffectMaterial> implements EventListenerObj
 
 		} */
 
-		if(data.colorSpace === sRGBEncoding) {
+		if(data.colorSpace === "srgb") {
 
 			// Convert back to linear.
 			fragmentMainImage += "color0 = sRGBToLinear(color0);\n\t";
@@ -455,7 +459,11 @@ export class EffectPass extends Pass<EffectMaterial> implements EventListenerObj
 
 		// Ensure that leading preprocessor directives start on a new line.
 		data.shaderParts.forEach((value, key, map) => map.set(key, value ? value.trim().replace(/^#/, "\n#") : null));
-		this.fullscreenMaterial.setShaderData(data);
+
+		this.fullscreenMaterial.setShaderParts(data.shaderParts)
+			.setDefines(data.defines)
+			.setUniforms(data.uniforms)
+			.setExtensions(data.extensions);
 
 	}
 

@@ -1,2 +1,2 @@
-export * from "./LookupTexture";
-export * from "./TetrahedralUpscaler";
+export * from "./LookupTexture.js";
+export * from "./TetrahedralUpscaler.js";

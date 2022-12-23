@@ -1,10 +1,13 @@
-import { Vector2, WebGLRenderer } from "three";
-import { Log, Resolution, Timer } from "../utils";
-import { BufferManager } from "./BufferManager";
-import { Disposable } from "./Disposable";
-import { Renderable } from "./Renderable";
-import { Resizable } from "./Resizable";
-import { Pass } from "./Pass";
+import { Material, Vector2, WebGLRenderer } from "three";
+import { Log } from "../utils/Log.js";
+import { Resolution } from "../utils/Resolution.js";
+import { Timer } from "../utils/Timer.js";
+import { BufferManager } from "./BufferManager.js";
+import { Disposable } from "./Disposable.js";
+import { Renderable } from "./Renderable.js";
+import { Resizable } from "./Resizable.js";
+import { Pass } from "./Pass.js";
+import { ImmutableTimer } from "../index.js";
 
 const v = new Vector2();
 
@@ -30,13 +33,13 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 	 * A list of passes.
 	 */
 
-	private passes: Pass[];
+	private passes: Pass<Material | null>[];
 
 	/**
 	 * A timer.
 	 */
 
-	readonly timer: Timer;
+	private _timer: Timer;
 
 	/**
 	 * The current resolution.
@@ -68,13 +71,23 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 
 		this._renderer = renderer;
 		this.passes = [];
-		this.timer = new Timer();
+		this._timer = new Timer();
 
 		this.resolution = new Resolution();
 		this.resolution.addEventListener("change", () => this.onResolutionChange());
 
 		this.updateStyle = true;
 		this.autoRenderToScreen = true;
+
+	}
+
+	/**
+	 * The internal timer.
+	 */
+
+	get timer(): ImmutableTimer {
+
+		return this._timer;
 
 	}
 
@@ -113,7 +126,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 	 * @param pass - The pass.
 	 */
 
-	private registerPass(pass: Pass) {
+	private registerPass(pass: Pass<Material | null>) {
 
 		if(this.renderer !== null) {
 
@@ -123,7 +136,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 
 		}
 
-		pass.timer = this.timer;
+		pass.timer = this._timer;
 
 	}
 
@@ -133,7 +146,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 	 * @param pass - The pass.
 	 */
 
-	private unregisterPass(pass: Pass) {
+	private unregisterPass(pass: Pass<Material | null>) {
 
 		pass.renderer = null;
 		pass.timer = null;
@@ -146,7 +159,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 	 * @param pass - The pass.
 	 */
 
-	addPass(pass: Pass) {
+	addPass(pass: Pass<Material | null>) {
 
 		this.registerPass(pass);
 		this.passes.push(pass);
@@ -159,7 +172,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 	 * @param pass - The pass.
 	 */
 
-	removePass(pass: Pass): void {
+	removePass(pass: Pass<Material | null>): void {
 
 		const passes = this.passes;
 		const index = passes.indexOf(pass);
@@ -207,7 +220,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 
 		}
 
-		this.timer.update(timestamp);
+		this._timer.update(timestamp);
 
 		for(const pass of this.passes) {
 
@@ -281,7 +294,7 @@ export class RenderPipeline implements Disposable, Renderable, Resizable {
 		}
 
 		this.removeAllPasses();
-		this.timer.dispose();
+		this._timer.dispose();
 
 		RenderPipeline.bufferManager.dispose();
 
