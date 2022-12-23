@@ -2,7 +2,6 @@ import {
 	Event,
 	EventListener,
 	Scene,
-	sRGBEncoding,
 	OrthographicCamera,
 	PerspectiveCamera
 } from "three";

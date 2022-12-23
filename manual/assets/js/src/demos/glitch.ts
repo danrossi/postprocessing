@@ -14,7 +14,7 @@ import {
 import {
 	ChromaticAberrationEffect,
 	EffectPass,
-	GeometryPass
+	GeometryPass,
 	GlitchEffect,
 	GlitchMode,
 	NoiseTexture,
@@ -64,7 +64,7 @@ function load(): Promise<Map<string, unknown>> {
 
 }
 
-window.addEventListener("load", () => load().then((assets) => {
+window.addEventListener("load", () => void load().then((assets) => {
 
 	// Renderer
 

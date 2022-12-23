@@ -13,7 +13,7 @@ import {
 	BlendFunction,
 	EdgeDetectionMode,
 	EffectPass,
-	GeometryPass
+	GeometryPass,
 	PredicationMode,
 	RenderPipeline,
 	SMAAEffect,
@@ -57,7 +57,7 @@ function load(): Promise<Map<string, unknown>> {
 
 }
 
-window.addEventListener("load", () => load().then((assets) => {
+window.addEventListener("load", () => void load().then((assets) => {
 
 	// Renderer
 
@@ -115,7 +115,7 @@ window.addEventListener("load", () => load().then((assets) => {
 
 	const effectPass = new EffectPass(effect);
 
-	//#region DEBUG
+	// #region DEBUG
 	const smaaEdgesDebugPass = new EffectPass(effect, new TextureEffect({ texture: effect.edgesTexture }));
 	const smaaWeightsDebugPass = new EffectPass(effect, new TextureEffect({ texture: effect.weightsTexture }));
 
@@ -126,7 +126,7 @@ window.addEventListener("load", () => load().then((assets) => {
 	smaaWeightsDebugPass.enabled = false;
 	smaaEdgesDebugPass.fullscreenMaterial.encodeOutput = false;
 	smaaWeightsDebugPass.fullscreenMaterial.encodeOutput = false;
-	//#endregion DEBUG
+	// #endregion DEBUG
 
 	const pipeline = new RenderPipeline(renderer);
 	pipeline.autoRenderToScreen = false;
@@ -139,7 +139,7 @@ window.addEventListener("load", () => load().then((assets) => {
 	// Settings
 
 	const fpsMeter = new FPSMeter();
-	const pane = new Pane({ container: container.querySelector(".tp")  as HTMLElement });
+	const pane = new Pane({ container: container.querySelector(".tp") as HTMLElement });
 	pane.addMonitor(fpsMeter, "fps", { label: "FPS" });
 
 	const SMAADebug = { OFF: 0, EDGES: 1, WEIGHTS: 2 };
@@ -165,7 +165,7 @@ window.addEventListener("load", () => load().then((assets) => {
 
 	});
 
-	let subfolder = folder.addFolder({ title: "Edge Detection", expanded: false });
+	const subfolder = folder.addFolder({ title: "Edge Detection", expanded: false });
 	subfolder.addInput(edgeDetectionMaterial, "edgeDetectionMode", { options: EdgeDetectionMode });
 	subfolder.addInput(edgeDetectionMaterial, "edgeDetectionThreshold", { min: 0.01, max: 0.3, step: 1e-4 });
 	subfolder.addInput(edgeDetectionMaterial, "predicationMode", { options: PredicationMode });

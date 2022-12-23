@@ -1,4 +1,4 @@
-import { ColorSpace, LinearEncoding, TextureEncoding, Uniform } from "three";
+import { ColorSpace, Uniform } from "three";
 import { BlendFunction } from "../enums/BlendFunction.js";
 import { EffectAttribute } from "../enums/EffectAttribute.js";
 import { EffectShaderSection } from "../enums/EffectShaderSection.js";

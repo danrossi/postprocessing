@@ -54,7 +54,7 @@ function load(): Promise<Map<string, unknown>> {
 
 }
 
-window.addEventListener("load", () => load().then((assets) => {
+window.addEventListener("load", () => void load().then((assets) => {
 
 	// Renderer
 

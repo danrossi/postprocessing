@@ -1,5 +1,5 @@
 import { NavigationManager } from "./components/NavigationManager.js";
-import { SidebarManager} from "./components/SidebarManager.js";
+import { SidebarManager } from "./components/SidebarManager.js";
 import { ThemeManager } from "./components/ThemeManager.js";
 import { ViewportManager } from "./components/ViewportManager.js";
 import { require } from "./shims/require.js";

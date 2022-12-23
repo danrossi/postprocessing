@@ -1,4 +1,4 @@
-import { ColorSpace, TextureEncoding, Uniform } from "three";
+import { ColorSpace, Uniform } from "three";
 import { Pass } from "../core/Pass.js";
 import { BlendFunction } from "../enums/BlendFunction.js";
 import { EffectAttribute } from "../enums/EffectAttribute.js";
