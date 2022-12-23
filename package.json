@@ -60,7 +60,7 @@
 		"hugo": "hugo -s manual --minify",
 		"lint": "run-s lint:*",
 		"lint:css": "stylelint --fix manual/assets/css/src",
-		"lint:js": "eslint --ext .ts --fix src",
+		"lint:js": "eslint --ext .ts --fix src manual/assets/js/src",
 		"postcss": "postcss manual/assets/css/dist/index.css -o manual/assets/css/dist/index.css -c manual",
 		"prepublishOnly": "run-s test doc",
 		"prewatch": "run-s clean build:css build:js",
