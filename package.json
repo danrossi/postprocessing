@@ -82,7 +82,7 @@
 		"extends": "aether/typescript"
 	},
 	"peerDependencies": {
-		"three": ">= 0.147.0 < 0.149.0"
+		"three": ">= 0.148.0 < 0.149.0"
 	},
 	"devDependencies": {
 		"@tweakpane/core": "1.x.x",
@@ -94,8 +94,8 @@
 		"cssnano": "5.x.x",
 		"del-cli": "5.x.x",
 		"esbuild": "0.x.x",
+		"esbuild-plugin-alias": "0.x.x",
 		"esbuild-plugin-glsl": "1.x.x",
-		"esbuild-ts-paths": "1.x.x",
 		"eslint": "8.x.x",
 		"eslint-config-aether": "1.x.x",
 		"eslint-watch": "8.x.x",
