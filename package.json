@@ -53,7 +53,7 @@
 		"build:js": "node esbuild",
 		"build:js:min": "node esbuild -m",
 		"build:dts": "tsc -p tsconfig.d.json",
-		"clean": "del-cli dist tmp manual/resources manual/assets/**/dist public",
+		"clean": "del-cli dist temp manual/resources manual/assets/**/dist public",
 		"deploy": "run-s postcss hugo gzip",
 		"doc": "typedoc",
 		"gzip": "gzipper c public",
@@ -61,10 +61,11 @@
 		"lint": "run-s lint:*",
 		"lint:css": "stylelint --fix manual/assets/css/src",
 		"lint:js": "eslint --ext .ts --fix src manual/assets/js/src",
+		"lint:tsc": "tsc --noemit",
 		"postcss": "postcss manual/assets/css/dist/index.css -o manual/assets/css/dist/index.css -c manual",
 		"prepublishOnly": "run-s test doc",
 		"prewatch": "run-s clean build:css build:js",
-		"test": "run-s lint clean build:css build:js:min ava",
+		"test": "run-s lint clean build:css build:js:min build:dts ava",
 		"start": "hugo server -s manual -e development",
 		"watch": "run-p watch:* start",
 		"watch:css": "sass --no-source-map -I manual/assets/css/src/values manual/assets/css/src:manual/assets/css/dist -w",
@@ -106,7 +107,7 @@
 		"postcss-cli": "10.x.x",
 		"postcss-preset-env": "7.x.x",
 		"sass": "1.x.x",
-		"spatial-controls": "5.x.x",
+		"spatial-controls": "6.x.x",
 		"stylelint": "14.x.x",
 		"stylelint-config-standard-scss": "6.x.x",
 		"stylelint-order": "5.x.x",
@@ -115,6 +116,7 @@
 		"tslib": "2.x.x",
 		"tweakpane": "3.x.x",
 		"typedoc": "0.x.x",
+		"typedoc-plugin-mdn-links": "2.x.x",
 		"typescript": "4.x.x"
 	}
 }
