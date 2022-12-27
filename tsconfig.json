@@ -1,10 +1,10 @@
 {
-	"include": ["./src", "./manual/assets/js"],
+	"include": ["./src", "./manual/assets/js/src"],
 	"compilerOptions": {
 		"rootDir": ".",
 		"baseUrl": ".",
 		"paths": {
-			"postprocessing": ["./src"]
+			"postprocessing": ["./src/index.js"]
 		},
 		"moduleResolution": "NodeNext",
 		"module": "ESNext",
@@ -17,6 +17,7 @@
 	},
 	"typedocOptions": {
 		"entryPoints": ["./src/index.ts"],
+		"exclude": "**/node_modules/**",
 		"out": "./public/docs",
 		"theme": "default",
 		"readme": "none",
@@ -24,6 +25,14 @@
 		"excludeInternal": true,
 		"includeVersion": true,
 		"hideGenerator": true,
-		"treatWarningsAsErrors": true
+		"treatWarningsAsErrors": true,
+		"externalSymbolLinkMappings": {
+			"@types/three": {
+				"*": "https://threejs.org/docs/"
+			},
+			"three": {
+				"*": "https://threejs.org/docs/"
+			}
+    }
 	}
 }
