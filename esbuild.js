@@ -19,14 +19,14 @@ const date = new Date();
 const banner = `/**
  * ${pkg.name} v${pkg.version} build ${date.toDateString()}
  * ${pkg.homepage}
- * Copyright 2015-${date.getFullYear()} ${pkg.author.name}
+ * Copyright 2015 ${pkg.author.name}
  * @license ${pkg.license}
  */`;
 
 const plugins = [
 	glsl({ minify }),
 	alias({
-		"postprocessing": path.resolve(__dirname, "./src"),
+		[pkg.name]: path.resolve(__dirname, "./src/index.ts"),
 		"temp": path.resolve(__dirname, "./temp")
 	})
 ];
