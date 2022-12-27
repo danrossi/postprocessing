@@ -4,6 +4,8 @@ import { Event, EventDispatcher } from "three";
  * A buffered event dispatcher.
  *
  * Calling {@link dispatchEvent} multiple times in quick succession will only dispatch a single event.
+ *
+ * @group Utils
  */
 
 export class BufferedEventDispatcher extends EventDispatcher {

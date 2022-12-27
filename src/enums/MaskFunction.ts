@@ -1,5 +1,7 @@
 /**
  * An enumeration of mask functions.
+ *
+ * @group Enums
  */
 
 export enum MaskFunction {

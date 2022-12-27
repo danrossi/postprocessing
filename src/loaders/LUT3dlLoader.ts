@@ -7,6 +7,7 @@ import { LookupTexture } from "../textures/lut/LookupTexture.js";
  * Based on an implementation by Garrett Johnson.
  * @see https://github.com/gkjohnson/threejs-sandbox/tree/master/3d-lut
  * @see http://download.autodesk.com/us/systemdocs/help/2011/lustre/index.html?url=./files/WSc4e151a45a3b785a24c3d9a411df9298473-7ffd.htm,topicNumber=d0e9492
+ * @group Loaders
  */
 
 export class LUT3dlLoader extends Loader {

@@ -237,6 +237,7 @@ function tetrahedralSample(data: ArrayLike<number>, size: number,
  *
  * Based on an implementation by Garrett Johnson.
  * @see https://github.com/gkjohnson/threejs-sandbox/blob/master/3d-lut
+ * @group Textures
  */
 
 export class TetrahedralUpscaler {

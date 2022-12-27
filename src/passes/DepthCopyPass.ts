@@ -6,6 +6,8 @@ import { Resolution } from "../utils/Resolution.js";
 
 /**
  * A pass that copies depth into a render target.
+ *
+ * @group Passes
  */
 
 export class DepthCopyPass extends Pass<DepthCopyMaterial> {

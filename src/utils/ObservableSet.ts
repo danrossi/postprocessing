@@ -2,6 +2,8 @@ import { EventDispatcher } from "three";
 
 /**
  * A set that emits events of type {@link EVENT_CHANGE} when its data changes.
+ *
+ * @group Utils
  */
 
 export class ObservableSet<T> extends EventDispatcher implements Set<T> {

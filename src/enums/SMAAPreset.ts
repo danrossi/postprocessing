@@ -1,5 +1,7 @@
 /**
  * An enumeration of SMAA presets.
+ *
+ * @group Enums
  */
 
 export enum SMAAPreset {

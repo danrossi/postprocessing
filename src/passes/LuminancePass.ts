@@ -6,6 +6,8 @@ import { Resolution } from "../utils/Resolution.js";
 
 /**
  * A luminance pass.
+ *
+ * @group Passes
  */
 
 export class LuminancePass extends Pass<LuminanceMaterial> {

@@ -1,5 +1,7 @@
 /**
  * An enumeration of blur kernel sizes.
+ *
+ * @group Enums
  */
 
 export enum KernelSize {

@@ -53,6 +53,7 @@ function getCoefficients(n: number): Float64Array {
  * A Gauss kernel.
  *
  * @see https://github.com/Jam3/glsl-fast-gaussian-blur
+ * @group Utils
  */
 
 export class GaussKernel {

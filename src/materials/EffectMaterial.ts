@@ -18,6 +18,8 @@ import vertexTemplate from "./glsl/effect.vert";
 
 /**
  * An effect material for compound shaders. Supports dithering.
+ *
+ * @group Materials
  */
 
 export class EffectMaterial extends ShaderMaterial implements Resizable {

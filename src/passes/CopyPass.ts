@@ -5,6 +5,8 @@ import { Resolution } from "../utils/Resolution.js";
 
 /**
  * Copies the contents of the default input buffer to another buffer.
+ *
+ * @group Passes
  */
 
 export class CopyPass extends Pass<CopyMaterial> {

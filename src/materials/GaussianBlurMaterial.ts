@@ -7,6 +7,8 @@ import vertexShader from "./glsl/convolution.gaussian.vert";
 
 /**
  * Gaussian blur material options.
+ *
+ * @group Materials
  */
 
 export interface GaussianBlurMaterialOptions {

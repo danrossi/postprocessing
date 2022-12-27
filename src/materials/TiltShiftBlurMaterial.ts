@@ -7,6 +7,8 @@ import vertexShader from "./glsl/convolution.tilt-shift.vert";
 
 /**
  * Tilt shift blur material options.
+ *
+ * @group Materials
  */
 
 export interface TiltShiftBlurMaterialOptions {

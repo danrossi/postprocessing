@@ -2,6 +2,8 @@ import { EventDispatcher } from "three";
 
 /**
  * A map that emits events of type {@link EVENT_CHANGE} when its data changes.
+ *
+ * @group Utils
  */
 
 export class ObservableMap<K, V> extends EventDispatcher implements Map<K, V> {

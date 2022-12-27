@@ -2,6 +2,7 @@
  * An enumeration of blend functions.
  *
  * @see https://www.khronos.org/registry/OpenGL/extensions/NV/NV_blend_equation_advanced.txt
+ * @group Enums
  */
 
 export enum BlendFunction {

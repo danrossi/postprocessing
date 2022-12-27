@@ -1,11 +1,10 @@
 /**
  * Creates a new canvas from raw image data.
  *
- * @private
  * @param width - The image width.
  * @param height - The image height.
  * @param data - The image data.
- * @return {Canvas} The canvas.
+ * @return The canvas.
  */
 
 function createCanvas(width: number, height: number, data: ArrayLike<number> | HTMLImageElement): HTMLCanvasElement {
@@ -39,10 +38,12 @@ function createCanvas(width: number, height: number, data: ArrayLike<number> | H
 /**
  * A container for raw RGBA image data.
  *
- * @implements {ImageData}
+ * @group Textures
  */
 
-export class RawImageData {
+export class RawImageData implements ImageData {
+
+	colorSpace: PredefinedColorSpace;
 
 	/**
 	 * The width of the image.
@@ -72,6 +73,7 @@ export class RawImageData {
 
 	constructor(width = 0, height = 0, data: Uint8ClampedArray) {
 
+		this.colorSpace = "srgb";
 		this.width = width;
 		this.height = height;
 		this.data = data;

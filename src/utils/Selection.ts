@@ -4,6 +4,8 @@ import { Object3D } from "three";
  * An object selection.
  *
  * Object selections use render layers to facilitate quick and efficient visibility changes.
+ *
+ * @group Utils
  */
 
 export class Selection extends Set<Object3D> {

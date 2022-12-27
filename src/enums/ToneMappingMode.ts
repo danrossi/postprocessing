@@ -1,5 +1,7 @@
 /**
  * A tone mapping mode enumeration.
+ *
+ * @group Enums
  */
 
 export enum ToneMappingMode {

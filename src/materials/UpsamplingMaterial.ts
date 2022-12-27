@@ -9,6 +9,7 @@ import vertexShader from "./glsl/convolution.upsampling.vert";
  *
  * Based on an article by Fabrice Piquet.
  * @see https://www.froyok.fr/blog/2021-12-ue4-custom-bloom/
+ * @group Materials
  */
 
 export class UpsamplingMaterial extends ShaderMaterial implements Resizable {

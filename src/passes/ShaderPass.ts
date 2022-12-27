@@ -5,6 +5,8 @@ import { Pass } from "../core/Pass.js";
  * A pass that renders a given shader material as a fullscreen effect.
  *
  * To render multiple chained fullscreen effects, consider using {@link EffectPass} instead.
+ *
+ * @group Passes
  */
 
 export class ShaderPass extends Pass<ShaderMaterial> {

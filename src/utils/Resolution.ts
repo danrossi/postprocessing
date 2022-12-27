@@ -4,6 +4,8 @@ const AUTO_SIZE = -1;
 
 /**
  * A resolution.
+ *
+ * @group Utils
  */
 
 export class Resolution extends EventDispatcher {

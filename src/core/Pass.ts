@@ -21,6 +21,8 @@ import { Renderable } from "./Renderable.js";
 
 /**
  * An abstract pass.
+ *
+ * @group Core
  */
 
 export abstract class Pass<T extends Material | null = null> extends EventDispatcher implements Disposable, Renderable {
@@ -252,7 +254,7 @@ export abstract class Pass<T extends Material | null = null> extends EventDispat
 	 * If the requirements are not met, this method should throw an error.
 	 *
 	 * @param renderer - The current renderer.
-	 * @throws {@link Error} if the device doesn't meet the requirements.
+	 * @throws If the device doesn't meet the requirements.
 	 */
 
 	checkRequirements(renderer: WebGLRenderer): void {}

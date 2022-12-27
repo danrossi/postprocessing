@@ -6,6 +6,7 @@
  * @param near - The camera near plane.
  * @param far - The camera far plane.
  * @return The view Z.
+ * @group Utils
  */
 
 export function orthographicDepthToViewZ(depth: number, near: number, far: number): number {

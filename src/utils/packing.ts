@@ -10,6 +10,7 @@ const unpackFactors = new Float32Array([
  *
  * @param packedDepth - The packed float.
  * @return The unpacked float.
+ * @group Utils
  */
 
 export function unpackRGBAToFloat(packedDepth: Uint8Array): number {

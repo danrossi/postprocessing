@@ -1,5 +1,7 @@
 /**
  * An enumeration of edge detection modes.
+ *
+ * @group Enums
  */
 
 export enum EdgeDetectionMode {

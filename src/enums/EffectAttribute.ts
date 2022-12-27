@@ -1,5 +1,7 @@
 /**
  * An enumeration of effect attribute flags.
+ *
+ * @group Enums
  */
 
 export enum EffectAttribute {

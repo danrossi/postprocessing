@@ -13,6 +13,8 @@ const v = new Vector2();
 
 /**
  * A render pipeline that can be used to group and run passes.
+ *
+ * @group Core
  */
 
 export class RenderPipeline implements Disposable, Renderable, Resizable {

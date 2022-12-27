@@ -9,6 +9,7 @@ import vertexShader from "./glsl/depth-downsampling.vert";
  *
  * Based on an article by Eleni Maria Stea.
  * @see https://eleni.mutantstargoat.com/hikiko/depth-aware-upsampling-6
+ * @group Materials
  */
 
 export class DepthDownsamplingMaterial extends ShaderMaterial implements Resizable {

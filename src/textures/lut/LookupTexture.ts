@@ -17,6 +17,8 @@ import workerProgram from "temp/lut/worker.txt";
 
 /**
  * 3D image data.
+ *
+ * @group Textures
  */
 
 interface Image3DData {
@@ -341,7 +343,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 	/**
 	 * Converts this LUT into a 2D data texture.
 	 *
-	 * Custom {@link LUTDomainBounds} are stored in {@link Texture.userData} as `domainBounds`.
+	 * Custom {@link LUTDomainBounds} are stored as `userData.domainBounds`.
 	 *
 	 * @return The texture.
 	 */

@@ -63,6 +63,8 @@ function getNoise(size: number, format: number, type: TextureDataType): BufferSo
 
 /**
  * A noise texture.
+ *
+ * @group Textures
  */
 
 export class NoiseTexture extends DataTexture {

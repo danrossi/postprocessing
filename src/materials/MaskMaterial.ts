@@ -7,6 +7,8 @@ import vertexShader from "./glsl/common.vert";
 
 /**
  * A mask shader material.
+ *
+ * @group Materials
  */
 
 export class MaskMaterial extends ShaderMaterial {

@@ -1,5 +1,7 @@
 /**
  * An enumeration of color channels.
+ *
+ * @group Enums
  */
 
 export enum ColorChannel {

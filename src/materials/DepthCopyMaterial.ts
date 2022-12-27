@@ -6,6 +6,8 @@ import vertexShader from "./glsl/depth-copy.vert";
 
 /**
  * A depth copy shader material.
+ *
+ * @group Materials
  */
 
 export class DepthCopyMaterial extends ShaderMaterial {

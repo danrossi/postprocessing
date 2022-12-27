@@ -9,6 +9,7 @@ import { ObservableMap } from "../utils/ObservableMap.js";
  * Listen for events of type {@link EVENT_CHANGE} to react to resource updates.
  *
  * @see BufferManager
+ * @group Core
  */
 
 export class Input extends BufferedEventDispatcher {

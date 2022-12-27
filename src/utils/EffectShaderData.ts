@@ -9,6 +9,7 @@ import { BlendMode } from "../effects/blending/BlendMode.js";
  * A collection of shader data.
  *
  * @internal
+ * @group Utils
  */
 
 export class EffectShaderData {

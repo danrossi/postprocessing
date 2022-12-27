@@ -5,6 +5,8 @@ import vertexShader from "./glsl/common.vert";
 
 /**
  * An adaptive luminance shader material.
+ *
+ * @group Materials
  */
 
 export class AdaptiveLuminanceMaterial extends ShaderMaterial {

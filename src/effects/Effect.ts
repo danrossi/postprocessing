@@ -11,6 +11,8 @@ import { BlendMode } from "./blending/BlendMode.js";
  * An abstract effect.
  *
  * Effects are subpasses that can be merged using the {@link EffectPass}.
+ *
+ * @group Effects
  */
 
 export abstract class Effect extends Pass {

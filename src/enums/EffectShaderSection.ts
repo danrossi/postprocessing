@@ -1,5 +1,7 @@
 /**
  * An enumeration of effect shader placeholders.
+ *
+ * @group Enums
  */
 
 export enum EffectShaderSection {

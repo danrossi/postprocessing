@@ -1,5 +1,7 @@
 /**
  * An enumeration of G-Buffer components.
+ *
+ * @group Enums
  */
 
 export enum GBuffer {

@@ -1,5 +1,7 @@
 /**
  * An enumeration of glitch modes.
+ *
+ * @group Enums
  */
 
 export enum GlitchMode {

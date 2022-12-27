@@ -7,6 +7,7 @@ import { LookupTexture } from "../textures/lut/LookupTexture.js";
  * Based on an implementation by Garrett Johnson.
  * @see https://github.com/gkjohnson/threejs-sandbox/tree/master/3d-lut
  * @see https://wwwimages2.adobe.com/content/dam/acom/en/products/speedgrade/cc/pdfs/cube-lut-specification-1.0.pdf
+ * @group Loaders
  */
 
 export class LUTCubeLoader extends Loader {

@@ -5,6 +5,8 @@ import vertexShader from "./glsl/common.vert";
 
 /**
  * A simple copy shader material.
+ *
+ * @group Materials
  */
 
 export class CopyMaterial extends ShaderMaterial {

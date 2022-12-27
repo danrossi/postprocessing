@@ -2,6 +2,8 @@ import { Disposable } from "./Disposable.js";
 
 /**
  * A buffer manager.
+ *
+ * @group Core
  */
 
 export class BufferManager implements Disposable {

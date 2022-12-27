@@ -6,6 +6,7 @@
  * @param b - The target value.
  * @param p - The interpolation value.
  * @return The interpolated value.
+ * @group Utils
  */
 
 export function lerp(a: number, b: number, p: number): number {
@@ -20,6 +21,7 @@ export function lerp(a: number, b: number, p: number): number {
  * @ignore
  * @param a - The value.
  * @return The saturated value.
+ * @group Utils
  */
 
 export function saturate(a: number): number {

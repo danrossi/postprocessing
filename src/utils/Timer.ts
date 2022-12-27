@@ -10,6 +10,7 @@ const SECONDS_TO_MILLISECONDS = 1e3;
  * Original implementation by Michael Herzog (Mugen87).
  *
  * @experimental Temporary substitute for {@link https://github.com/mrdoob/three.js/pull/17912}
+ * @group Utils
  */
 
 export class Timer implements EventListenerObject, Disposable, ImmutableTimer {

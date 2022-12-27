@@ -8,6 +8,8 @@ import vertexShader from "./glsl/edge-detection.vert";
 
 /**
  * An edge detection material.
+ *
+ * @group Materials
  */
 
 export class EdgeDetectionMaterial extends ShaderMaterial implements Resizable {

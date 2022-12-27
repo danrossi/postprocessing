@@ -8,6 +8,8 @@ import vertexShader from "./glsl/convolution.box.vert";
 
 /**
  * Box blur material options.
+ *
+ * @group Materials
  */
 
 export interface BoxBlurMaterialOptions {

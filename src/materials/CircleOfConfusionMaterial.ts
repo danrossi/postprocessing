@@ -7,6 +7,8 @@ import vertexShader from "./glsl/common.vert";
 
 /**
  * A circle of confusion shader material.
+ *
+ * @group Materials
  */
 
 export class CircleOfConfusionMaterial extends ShaderMaterial {

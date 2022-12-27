@@ -8,6 +8,8 @@ import vertexShader from "./glsl/smaa-weights.vert";
  * Subpixel Morphological Antialiasing.
  *
  * This material computes weights for detected edges.
+ *
+ * @group Materials
  */
 
 export class SMAAWeightsMaterial extends ShaderMaterial implements Resizable {

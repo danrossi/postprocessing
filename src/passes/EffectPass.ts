@@ -248,6 +248,8 @@ function integrateEffect(prefix: string, effect: Effect, data: EffectShaderData)
  * An effect pass.
  *
  * Use this pass to combine {@link Effect} instances.
+ *
+ * @group Passes
  */
 
 export class EffectPass extends Pass<EffectMaterial> implements EventListenerObject {

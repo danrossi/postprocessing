@@ -1,5 +1,7 @@
 /**
  * An enumeration of depth copy modes.
+ *
+ * @group Enums
  */
 
 export enum DepthCopyMode {

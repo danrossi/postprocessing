@@ -1,5 +1,7 @@
 /**
  * An enumeration of WebGL 1 extensions.
+ *
+ * @group Enums
  */
 
 export enum WebGLExtension {

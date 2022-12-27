@@ -1,5 +1,7 @@
 /**
  * A timer that provides read access to time data.
+ *
+ * @group Utils
  */
 
 export interface ImmutableTimer {

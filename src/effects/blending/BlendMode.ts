@@ -72,6 +72,8 @@ const blendFunctions = new Map<BlendFunction, string>([
 
 /**
  * A blend mode.
+ *
+ * @group Effects
  */
 
 export class BlendMode extends EventDispatcher {

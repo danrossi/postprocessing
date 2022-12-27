@@ -2,6 +2,8 @@ import { LogLevel } from "../enums/LogLevel.js";
 
 /**
  * A simple logging helper.
+ *
+ * @group Utils
  */
 
 export abstract class Log {
