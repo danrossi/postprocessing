@@ -17,6 +17,12 @@ export class Selection extends Set<Object3D> {
 	private _layer: number;
 
 	/**
+	 * Indicates whether this selection is enabled.
+	 */
+
+	enabled: boolean;
+
+	/**
 	 * Controls whether objects that are added to this selection should be removed from all other layers.
 	 */
 
@@ -29,11 +35,12 @@ export class Selection extends Set<Object3D> {
 	 * @param layer - A dedicated render layer for selected objects. Default is 10.
 	 */
 
-	constructor(iterable: Iterable<Object3D>, layer = 10) {
+	constructor(iterable?: Iterable<Object3D>, layer = 10) {
 
 		super();
 
 		this._layer = layer;
+		this.enabled = true;
 		this.exclusive = false;
 
 		if(iterable !== undefined) {
