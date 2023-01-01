@@ -6,3 +6,4 @@ export * from "./Pass.js";
 export * from "./Renderable.js";
 export * from "./Resizable.js";
 export * from "./RenderPipeline.js";
+export * from "./Selective.js";
