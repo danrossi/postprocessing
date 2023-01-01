@@ -241,7 +241,7 @@ window.addEventListener("load", () => void load().then((assets) => {
 		fpsMeter.update(timestamp);
 		controls.update(timestamp);
 		animationMixer.update(pipeline.timer.delta * 1e-3);
-		pipeline.render();
+		pipeline.render(timestamp);
 		requestAnimationFrame(render);
 
 	});

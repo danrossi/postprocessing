@@ -1,15 +1,15 @@
 ---
 layout: single
 collection: sections
-title: Blur
+title: The Geometry Buffer
 draft: false
 menu:
   demos:
     parent: utility
-    weight: 20
-script: blur
+    weight: 10
+script: gbuffer
 ---
 
-# Blur
+# The Geometry Buffer
 
 ### External Resources

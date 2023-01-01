@@ -2,23 +2,23 @@ import {
 	CubeTexture,
 	CubeTextureLoader,
 	LoadingManager,
+	Mesh,
+	MeshBasicMaterial,
 	PerspectiveCamera,
 	Scene,
+	SphereGeometry,
 	sRGBEncoding,
+	Vector3,
 	VSMShadowMap,
 	WebGLRenderer
 } from "three";
 
 import {
-	BlendFunction,
-	EdgeDetectionMode,
-	EffectPass,
+	CopyPass,
+	DepthPickingPass,
+	//GBufferDebugPass,
 	GeometryPass,
-	PredicationMode,
-	RenderPipeline,
-	SMAAEffect,
-	SMAAPreset,
-	TextureEffect
+	RenderPipeline
 } from "postprocessing";
 
 import { Pane } from "tweakpane";
@@ -99,82 +99,30 @@ window.addEventListener("load", () => void load().then((assets) => {
 	scene.add(CornellBox.createEnvironment());
 	scene.add(CornellBox.createActors());
 
+	const cursor = new Mesh(
+		new SphereGeometry(0.2, 32, 32),
+		new MeshBasicMaterial({
+			color: 0xa9a9a9,
+			transparent: true,
+			depthWrite: false,
+			opacity: 0.5
+		})
+	);
+
+	scene.add(cursor);
+
 	// Post Processing
 
-	const effect = new SMAAEffect({
-		blendFunction: BlendFunction.NORMAL,
-		preset: SMAAPreset.MEDIUM,
-		edgeDetectionMode: EdgeDetectionMode.COLOR,
-		predicationMode: PredicationMode.DEPTH
-	});
-
-	const edgeDetectionMaterial = effect.edgeDetectionMaterial;
-	edgeDetectionMaterial.edgeDetectionThreshold = 0.02;
-	edgeDetectionMaterial.predicationThreshold = 0.002;
-	edgeDetectionMaterial.predicationScale = 1;
-
-	const effectPass = new EffectPass(effect);
-
-	// #region DEBUG
-	const smaaEdgesDebugPass = new EffectPass(effect, new TextureEffect({ texture: effect.edgesTexture }));
-	const smaaWeightsDebugPass = new EffectPass(effect, new TextureEffect({ texture: effect.weightsTexture }));
-
-	effectPass.output.defaultBuffer = null;
-	smaaEdgesDebugPass.output.defaultBuffer = null;
-	smaaWeightsDebugPass.output.defaultBuffer = null;
-	smaaEdgesDebugPass.enabled = false;
-	smaaWeightsDebugPass.enabled = false;
-	smaaEdgesDebugPass.fullscreenMaterial.encodeOutput = false;
-	smaaWeightsDebugPass.fullscreenMaterial.encodeOutput = false;
-	// #endregion DEBUG
-
+	const gBufferDebug = new GBufferDebugPass();
 	const pipeline = new RenderPipeline(renderer);
-	pipeline.autoRenderToScreen = false;
 	pipeline.addPass(new GeometryPass(scene, camera, { samples: 4 }));
-	pipeline.addPass(new EffectPass(effect));
-	pipeline.addPass(effectPass);
-	pipeline.addPass(smaaEdgesDebugPass);
-	pipeline.addPass(smaaWeightsDebugPass);
+	pipeline.addPass(gBufferDebug);
 
 	// Settings
 
 	const fpsMeter = new FPSMeter();
 	const pane = new Pane({ container: container.querySelector(".tp") as HTMLElement });
 	pane.addMonitor(fpsMeter, "fps", { label: "FPS" });
-
-	const SMAADebug = { OFF: 0, EDGES: 1, WEIGHTS: 2 };
-	const params = {
-		"preset": SMAAPreset.MEDIUM,
-		"debug": SMAADebug.OFF
-	};
-
-	const folder = pane.addFolder({ title: "Settings" });
-	folder.addInput(params, "debug", { options: SMAADebug }).on("change", (e) => {
-
-		effectPass.enabled = (e.value === SMAADebug.OFF);
-		smaaEdgesDebugPass.enabled = (e.value === SMAADebug.EDGES);
-		smaaWeightsDebugPass.enabled = (e.value === SMAADebug.WEIGHTS);
-
-	});
-
-	folder.addInput(params, "preset", { options: SMAAPreset }).on("change", (e) => {
-
-		const threshold = edgeDetectionMaterial.edgeDetectionThreshold;
-		effect.applyPreset(e.value);
-		edgeDetectionMaterial.edgeDetectionThreshold = threshold;
-
-	});
-
-	const subfolder = folder.addFolder({ title: "Edge Detection", expanded: false });
-	subfolder.addInput(edgeDetectionMaterial, "edgeDetectionMode", { options: EdgeDetectionMode });
-	subfolder.addInput(edgeDetectionMaterial, "edgeDetectionThreshold", { min: 0.01, max: 0.3, step: 1e-4 });
-	subfolder.addInput(edgeDetectionMaterial, "predicationMode", { options: PredicationMode });
-	subfolder.addInput(edgeDetectionMaterial, "predicationThreshold", { min: 4e-4, max: 0.01, step: 1e-4 });
-	subfolder.addInput(edgeDetectionMaterial, "predicationStrength", { min: 0, max: 1, step: 1e-4 });
-	subfolder.addInput(edgeDetectionMaterial, "predicationScale", { min: 1, max: 2, step: 0.01 });
-
-	folder.addInput(effect.blendMode.opacity, "value", { label: "opacity", min: 0, max: 1, step: 0.01 });
-	folder.addInput(effect.blendMode, "blendFunction", { options: BlendFunction });
 
 	// Resize Handler
 
