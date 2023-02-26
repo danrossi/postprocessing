@@ -35,7 +35,7 @@ const plugins = [
 
 //#region Library
 
-await esbuild.build({
+const ctxWorker = await esbuild.build({
 	entryPoints: await glob("src/**/worker.ts"),
 	outExtension: { ".js": ".txt" },
 	outdir: "temp",
@@ -43,9 +43,8 @@ await esbuild.build({
 	logLevel: "info",
 	format: "iife",
 	bundle: true,
-	minify,
-	watch
-}).catch(() => process.exit(1));
+	minify
+});
 
 await esbuild.build({
 	entryPoints: ["src/index.ts"],
@@ -56,7 +55,13 @@ await esbuild.build({
 	bundle: true,
 	external,
 	plugins
-}).catch(() => process.exit(1));
+});
+
+if(watch) {
+
+	await ctxWorker.watch();
+
+}
 
 //#endregion
 
@@ -71,9 +76,9 @@ await esbuild.build({
 	format: "iife",
 	bundle: true,
 	minify
-}).catch(() => process.exit(1));
+});
 
-await esbuild.build({
+const ctxManual = await esbuild.build({
 	entryPoints: ["manual/assets/js/src/index.ts"]
 		.concat(await glob("manual/assets/js/src/demos/*.ts")),
 	outdir: "manual/assets/js/dist",
@@ -83,8 +88,13 @@ await esbuild.build({
 	bundle: true,
 	external,
 	plugins,
-	minify,
-	watch
-}).catch(() => process.exit(1));
+	minify
+});
+
+if(watch) {
+
+	await ctxManual.watch();
+
+}
 
 //#endregion
