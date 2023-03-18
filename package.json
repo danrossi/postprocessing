@@ -45,7 +45,7 @@
 		"dist"
 	],
 	"engines": {
-		"node": ">= 0.16.0"
+		"node": ">= 0.18.0"
 	},
 	"scripts": {
 		"ava": "ava",
@@ -116,7 +116,7 @@
 		"tslib": "2.x.x",
 		"tweakpane": "3.x.x",
 		"typedoc": "0.x.x",
-		"typedoc-plugin-mdn-links": "2.x.x",
-		"typescript": "4.x.x"
+		"typedoc-plugin-mdn-links": "3.x.x",
+		"typescript": "5.x.x"
 	}
 }
