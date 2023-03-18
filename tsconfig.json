@@ -6,7 +6,7 @@
 		"paths": {
 			"postprocessing": ["./src/index.js"]
 		},
-		"moduleResolution": "NodeNext",
+		"moduleResolution": "nodenext",
 		"module": "ESNext",
 		"target": "ESNext",
 		"strict": true,
