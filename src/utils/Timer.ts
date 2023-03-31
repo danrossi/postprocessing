@@ -16,6 +16,12 @@ const SECONDS_TO_MILLISECONDS = 1e3;
 export class Timer implements EventListenerObject, Disposable, ImmutableTimer {
 
 	/**
+	 * The start time in milliseconds.
+	 */
+
+	private startTime: number;
+
+	/**
 	 * The previous time in milliseconds.
 	 */
 
@@ -75,6 +81,7 @@ export class Timer implements EventListenerObject, Disposable, ImmutableTimer {
 
 	constructor() {
 
+		this.startTime = performance.now();
 		this.previousTime = 0;
 		this.currentTime = 0;
 
@@ -162,7 +169,7 @@ export class Timer implements EventListenerObject, Disposable, ImmutableTimer {
 		} else {
 
 			this.previousTime = this.currentTime;
-			this.currentTime = (timestamp !== undefined) ? timestamp : performance.now();
+			this.currentTime = ((timestamp !== undefined) ? timestamp : performance.now()) - this.startTime;
 			this._delta = this.currentTime - this.previousTime;
 
 		}
@@ -180,7 +187,7 @@ export class Timer implements EventListenerObject, Disposable, ImmutableTimer {
 
 		this._delta = 0;
 		this._elapsed = 0;
-		this.currentTime = performance.now();
+		this.currentTime = performance.now() - this.startTime;
 
 	}
 
@@ -189,7 +196,7 @@ export class Timer implements EventListenerObject, Disposable, ImmutableTimer {
 		if(!document.hidden) {
 
 			// Reset the current time.
-			this.currentTime = performance.now();
+			this.currentTime = performance.now() - this.startTime;
 
 		}
 
