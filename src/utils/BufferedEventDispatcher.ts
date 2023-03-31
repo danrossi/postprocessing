@@ -14,7 +14,7 @@ export class BufferedEventDispatcher extends EventDispatcher {
 	 * A timeout ID.
 	 */
 
-	private timeoutId: number;
+	private timeoutId: NodeJS.Timeout | number;
 
 	/**
 	 * Constructs new input resources.
@@ -29,7 +29,7 @@ export class BufferedEventDispatcher extends EventDispatcher {
 
 	override dispatchEvent(event: Event): void {
 
-		if(this.timeoutId > 0) {
+		if(this.timeoutId !== 0) {
 
 			clearTimeout(this.timeoutId);
 
