@@ -25,7 +25,6 @@ Temporary Items
 # IDE settings
 .project
 .idea
-.vscore
 
 # Node
 node_modules
