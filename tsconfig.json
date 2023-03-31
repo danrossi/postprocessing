@@ -1,19 +1,21 @@
 {
-	"include": ["./src", "./manual/assets/js/src"],
+	"include": ["./*.js", "./src", "./manual/assets/js/src", "./test"],
 	"compilerOptions": {
-		"rootDir": ".",
 		"baseUrl": ".",
 		"paths": {
-			"postprocessing": ["./src/index.js"]
+			"postprocessing": ["./src/index.js"],
+			"temp": ["./temp"]
 		},
-		"moduleResolution": "nodenext",
+		"moduleResolution": "node",
 		"module": "ESNext",
 		"target": "ESNext",
 		"strict": true,
 		"sourceMap": false,
-		"importHelpers": true,
 		"skipLibCheck": true,
-		"noImplicitOverride": true
+		"importHelpers": true,
+		"resolveJsonModule": true,
+		"noImplicitOverride": true,
+		"allowSyntheticDefaultImports": true,
 	},
 	"typedocOptions": {
 		"entryPoints": ["./src/index.ts"],
