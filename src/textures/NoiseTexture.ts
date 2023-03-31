@@ -5,7 +5,8 @@ import {
 	RGFormat,
 	RGBAFormat,
 	TextureDataType,
-	UnsignedByteType
+	UnsignedByteType,
+	PixelFormat
 } from "three";
 
 /**
@@ -17,9 +18,9 @@ import {
  * @return The noise data.
  */
 
-function getNoise(size: number, format: number, type: TextureDataType): BufferSource {
+function getNoise(size: number, format: PixelFormat, type: TextureDataType): BufferSource {
 
-	const channels = new Map([
+	const channels = new Map<PixelFormat, number>([
 		[LuminanceFormat, 1],
 		[RedFormat, 1],
 		[RGFormat, 2],
