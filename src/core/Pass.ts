@@ -131,7 +131,7 @@ export abstract class Pass<T extends Material | null = null> extends EventDispat
 
 		this.disposables = new Set<Disposable>();
 		this.resolution = new Resolution();
-		this.resolution.addEventListener("change", () => this.onResolutionChange());
+		this.resolution.addEventListener("change", () => this.onResolutionChange(this.resolution));
 
 		this.input = new Input();
 		this.output = new Output();
@@ -277,7 +277,7 @@ export abstract class Pass<T extends Material | null = null> extends EventDispat
 	 * @param resolution - The resolution.
 	 */
 
-	protected onResolutionChange(resolution = this.resolution): void {}
+	protected onResolutionChange(resolution: Resolution): void {}
 
 	/**
 	 * Dispatches a `change` event.
