@@ -3,18 +3,18 @@
 	"version": "7.0.0-alpha",
 	"description": "A post processing library that provides the means to implement image filter effects for three.js.",
 	"homepage": "https://github.com/pmndrs/postprocessing",
-	"main": "dist/postprocessing.js",
-	"module": "dist/postprocessing.js",
+	"license": "Zlib",
+	"type": "module",
+	"sideEffects": false,
+	"main": "dist/index.js",
+	"module": "dist/index.js",
 	"types": "types/index.d.ts",
 	"exports": {
 		".": {
 			"types": "./dist/types/index.d.ts",
-			"default": "./dist/postprocessing.js"
+			"default": "./dist/index.js"
 		}
 	},
-	"type": "module",
-	"sideEffects": false,
-	"license": "Zlib",
 	"keywords": [
 		"effect",
 		"gbuffer",
@@ -42,10 +42,19 @@
 		"url": "https://github.com/pmndrs/postprocessing/issues"
 	},
 	"files": [
-		"dist"
+		"./dist"
 	],
 	"engines": {
 		"node": ">= 0.18.0"
+	},
+	"ava": {
+		"failFast": true,
+		"files": [
+			"test/**/*.js"
+		]
+	},
+	"eslintConfig": {
+		"extends": "aether/typescript"
 	},
 	"scripts": {
 		"ava": "ava",
@@ -73,20 +82,12 @@
 		"watch:eslint": "esw -w --ext .ts --color src manual/assets/js/src",
 		"watch:js": "node esbuild -w"
 	},
-	"ava": {
-		"failFast": true,
-		"files": [
-			"test/**/*.js"
-		]
-	},
-	"eslintConfig": {
-		"extends": "aether/typescript"
-	},
 	"peerDependencies": {
-		"three": ">= 0.150.0 < 0.151.0"
+		"three": ">= 0.151.0 < 0.152.0"
 	},
 	"devDependencies": {
 		"@tweakpane/core": "1.x.x",
+		"@types/node": "18.x.x",
 		"@types/three": "0.x.x",
 		"@typescript-eslint/eslint-plugin": "5.x.x",
 		"@typescript-eslint/parser": "5.x.x",
@@ -95,7 +96,6 @@
 		"cssnano": "5.x.x",
 		"del-cli": "5.x.x",
 		"esbuild": "0.x.x",
-		"esbuild-plugin-alias": "0.x.x",
 		"esbuild-plugin-glsl": "1.x.x",
 		"eslint": "8.x.x",
 		"eslint-config-aether": "1.x.x",
