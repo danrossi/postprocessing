@@ -82,7 +82,7 @@
 		"watch:js": "node esbuild -w"
 	},
 	"peerDependencies": {
-		"three": ">= 0.151.0 < 0.152.0"
+		"three": ">= 0.152.0 < 0.153.0"
 	},
 	"devDependencies": {
 		"@tweakpane/core": "1.x.x",
