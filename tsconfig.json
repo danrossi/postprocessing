@@ -2,10 +2,7 @@
 	"include": ["./*.js", "./src", "./manual/assets/js/src", "./test"],
 	"compilerOptions": {
 		"baseUrl": ".",
-		"paths": {
-			"postprocessing": ["./src/index.js"],
-			"temp": ["./temp"]
-		},
+		"outDir": "./dist",
 		"moduleResolution": "node",
 		"module": "ESNext",
 		"target": "ESNext",
@@ -16,25 +13,9 @@
 		"resolveJsonModule": true,
 		"noImplicitOverride": true,
 		"allowSyntheticDefaultImports": true,
-	},
-	"typedocOptions": {
-		"entryPoints": ["./src/index.ts"],
-		"exclude": "**/node_modules/**",
-		"out": "./public/docs",
-		"theme": "default",
-		"readme": "none",
-		"excludePrivate": true,
-		"excludeInternal": true,
-		"includeVersion": true,
-		"hideGenerator": true,
-		"treatWarningsAsErrors": true,
-		"externalSymbolLinkMappings": {
-			"@types/three": {
-				"*": "https://threejs.org/docs/"
-			},
-			"three": {
-				"*": "https://threejs.org/docs/"
-			}
-    }
+		"paths": {
+			"postprocessing": ["./src/index.js"],
+			"temp": ["./temp"]
+		}
 	}
 }
