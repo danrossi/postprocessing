@@ -1,8 +1,8 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector4 } from "three";
 import { Resizable } from "../core/Resizable.js";
 
-import fragmentShader from "./glsl/smaa-weights.frag";
-import vertexShader from "./glsl/smaa-weights.vert";
+import fragmentShader from "./shaders/smaa-weights.frag";
+import vertexShader from "./shaders/smaa-weights.vert";
 
 /**
  * Subpixel Morphological Antialiasing.

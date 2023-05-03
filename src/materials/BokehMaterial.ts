@@ -1,8 +1,8 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
 import { Resizable } from "../core/Resizable.js";
 
-import fragmentShader from "./glsl/convolution.bokeh.frag";
-import vertexShader from "./glsl/common.vert";
+import fragmentShader from "./shaders/convolution.bokeh.frag";
+import vertexShader from "./shaders/common.vert";
 
 /**
  * A bokeh disc blur material.

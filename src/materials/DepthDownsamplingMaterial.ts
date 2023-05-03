@@ -1,8 +1,8 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
 import { Resizable } from "../core/Resizable.js";
 
-import fragmentShader from "./glsl/depth-downsampling.frag";
-import vertexShader from "./glsl/depth-downsampling.vert";
+import fragmentShader from "./shaders/depth-downsampling.frag";
+import vertexShader from "./shaders/depth-downsampling.vert";
 
 /**
  * A depth downsampling shader material.

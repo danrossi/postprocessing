@@ -2,8 +2,8 @@ import { NoBlending, ShaderMaterial, Texture, Uniform, Vector4 } from "three";
 import { Resizable } from "../core/Resizable.js";
 import { KernelSize } from "../enums/KernelSize.js";
 
-import fragmentShader from "./glsl/convolution.kawase.frag";
-import vertexShader from "./glsl/convolution.kawase.vert";
+import fragmentShader from "./shaders/convolution.kawase.frag";
+import vertexShader from "./shaders/convolution.kawase.vert";
 
 const kernelPresets = [
 	new Float32Array([0.0, 0.0]),

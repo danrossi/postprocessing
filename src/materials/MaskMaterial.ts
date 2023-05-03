@@ -2,8 +2,8 @@ import { NoBlending, ShaderMaterial, Texture, Uniform, UnsignedByteType } from "
 import { ColorChannel } from "../enums/ColorChannel.js";
 import { MaskFunction } from "../enums/MaskFunction.js";
 
-import fragmentShader from "./glsl/mask.frag";
-import vertexShader from "./glsl/common.vert";
+import fragmentShader from "./shaders/mask.frag";
+import vertexShader from "./shaders/common.vert";
 
 /**
  * A mask shader material.

@@ -2,8 +2,8 @@ import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
 import { Resizable } from "../core/Resizable.js";
 import { GaussKernel } from "../utils/GaussKernel.js";
 
-import fragmentShader from "./glsl/convolution.gaussian.frag";
-import vertexShader from "./glsl/convolution.gaussian.vert";
+import fragmentShader from "./shaders/convolution.gaussian.frag";
+import vertexShader from "./shaders/convolution.gaussian.vert";
 
 /**
  * Gaussian blur material options.

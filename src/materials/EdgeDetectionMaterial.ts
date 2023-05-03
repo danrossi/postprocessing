@@ -3,8 +3,8 @@ import { Resizable } from "../core/Resizable.js";
 import { EdgeDetectionMode } from "../enums/EdgeDetectionMode.js";
 import { PredicationMode } from "../enums/PredicationMode.js";
 
-import fragmentShader from "./glsl/edge-detection.frag";
-import vertexShader from "./glsl/edge-detection.vert";
+import fragmentShader from "./shaders/edge-detection.frag";
+import vertexShader from "./shaders/edge-detection.vert";
 
 /**
  * An edge detection material.

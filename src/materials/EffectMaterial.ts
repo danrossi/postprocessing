@@ -13,8 +13,8 @@ import { Resizable } from "../core/Resizable.js";
 import { EffectShaderSection, EffectShaderSection as Section } from "../enums/EffectShaderSection.js";
 import { WebGLExtension } from "../enums/index.js";
 
-import fragmentTemplate from "./glsl/effect.frag";
-import vertexTemplate from "./glsl/effect.vert";
+import fragmentTemplate from "./shaders/effect.frag";
+import vertexTemplate from "./shaders/effect.vert";
 
 /**
  * An effect material for compound shaders. Supports dithering.

@@ -2,8 +2,8 @@ import { NoBlending, OrthographicCamera, PerspectiveCamera, ShaderMaterial, Text
 import { orthographicDepthToViewZ } from "../utils/orthographicDepthToViewZ.js";
 import { viewZToOrthographicDepth } from "../utils/viewZToOrthographicDepth.js";
 
-import fragmentShader from "./glsl/circle-of-confusion.frag";
-import vertexShader from "./glsl/common.vert";
+import fragmentShader from "./shaders/circle-of-confusion.frag";
+import vertexShader from "./shaders/common.vert";
 
 /**
  * A circle of confusion shader material.

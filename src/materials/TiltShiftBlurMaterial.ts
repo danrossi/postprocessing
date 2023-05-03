@@ -2,8 +2,8 @@ import { Uniform, Vector2, Vector4 } from "three";
 import { KernelSize } from "../enums/KernelSize.js";
 import { KawaseBlurMaterial } from "./KawaseBlurMaterial.js";
 
-import fragmentShader from "./glsl/convolution.tilt-shift.frag";
-import vertexShader from "./glsl/convolution.tilt-shift.vert";
+import fragmentShader from "./shaders/convolution.tilt-shift.frag";
+import vertexShader from "./shaders/convolution.tilt-shift.vert";
 
 /**
  * Tilt shift blur material options.

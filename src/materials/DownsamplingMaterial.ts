@@ -1,8 +1,8 @@
 import { NoBlending, ShaderMaterial, Texture, Uniform, Vector2 } from "three";
 import { Resizable } from "../core/Resizable.js";
 
-import fragmentShader from "./glsl/convolution.downsampling.frag";
-import vertexShader from "./glsl/convolution.downsampling.vert";
+import fragmentShader from "./shaders/convolution.downsampling.frag";
+import vertexShader from "./shaders/convolution.downsampling.vert";
 
 /**
  * A downsampling material.

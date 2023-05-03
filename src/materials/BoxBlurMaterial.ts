@@ -3,8 +3,8 @@ import { Resizable } from "../core/Resizable.js";
 import { orthographicDepthToViewZ } from "../utils/orthographicDepthToViewZ.js";
 import { viewZToOrthographicDepth } from "../utils/viewZToOrthographicDepth.js";
 
-import fragmentShader from "./glsl/convolution.box.frag";
-import vertexShader from "./glsl/convolution.box.vert";
+import fragmentShader from "./shaders/convolution.box.frag";
+import vertexShader from "./shaders/convolution.box.vert";
 
 /**
  * Box blur material options.
