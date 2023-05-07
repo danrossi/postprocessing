@@ -5,10 +5,10 @@ import {
 	Mesh,
 	MeshBasicMaterial,
 	Scene,
-	sRGBEncoding,
 	TextureLoader,
 	WebGLRenderer,
-	Texture
+	Texture,
+	SRGBColorSpace
 } from "three";
 
 import {
@@ -37,7 +37,7 @@ function load(): Promise<Map<string, unknown>> {
 
 		textureLoader.load(document.baseURI + "img/textures/photos/GEDC0053.jpg", (t) => {
 
-			t.encoding = sRGBEncoding;
+			t.colorSpace = SRGBColorSpace;
 			assets.set("photo", t);
 
 		});
@@ -58,7 +58,6 @@ window.addEventListener("load", () => void load().then((assets) => {
 	});
 
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
-	renderer.outputEncoding = sRGBEncoding;
 	renderer.setClearAlpha(0);
 
 	const container = document.querySelector(".viewport") as HTMLElement;

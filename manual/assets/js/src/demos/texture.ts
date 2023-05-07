@@ -4,8 +4,8 @@ import {
 	LoadingManager,
 	PerspectiveCamera,
 	RepeatWrapping,
+	SRGBColorSpace,
 	Scene,
-	sRGBEncoding,
 	TextureLoader,
 	VSMShadowMap,
 	WebGLRenderer
@@ -47,7 +47,7 @@ function load(): Promise<Map<string, unknown>> {
 
 		textureLoader.load(document.baseURI + "img/textures/lens-dirt/scratches.jpg", (t) => {
 
-			t.encoding = sRGBEncoding;
+			t.colorSpace = SRGBColorSpace;
 			t.wrapS = t.wrapT = RepeatWrapping;
 			assets.set("scratches", t);
 
@@ -55,7 +55,7 @@ function load(): Promise<Map<string, unknown>> {
 
 		cubeTextureLoader.load(urls, (t) => {
 
-			t.encoding = sRGBEncoding;
+			t.colorSpace = SRGBColorSpace;
 			assets.set("sky", t);
 
 		});
@@ -76,8 +76,6 @@ window.addEventListener("load", () => void load().then((assets) => {
 	});
 
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
-	renderer.physicallyCorrectLights = true;
-	renderer.outputEncoding = sRGBEncoding;
 	renderer.shadowMap.type = VSMShadowMap;
 	renderer.shadowMap.autoUpdate = false;
 	renderer.shadowMap.needsUpdate = true;

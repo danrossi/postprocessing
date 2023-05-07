@@ -4,8 +4,8 @@ import {
 	FogExp2,
 	LoadingManager,
 	PerspectiveCamera,
+	SRGBColorSpace,
 	Scene,
-	sRGBEncoding,
 	WebGLRenderer
 } from "three";
 
@@ -46,7 +46,7 @@ function load(): Promise<Map<string, unknown>> {
 
 		cubeTextureLoader.load(urls, (t) => {
 
-			t.encoding = sRGBEncoding;
+			t.colorSpace = SRGBColorSpace;
 			assets.set("sky", t);
 
 		});
@@ -67,9 +67,6 @@ window.addEventListener("load", () => void load().then((assets) => {
 	});
 
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
-	renderer.physicallyCorrectLights = true;
-	renderer.outputEncoding = sRGBEncoding;
-
 	const container = document.querySelector(".viewport") as HTMLElement;
 	container.prepend(renderer.domElement);
 

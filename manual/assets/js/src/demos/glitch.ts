@@ -5,8 +5,8 @@ import {
 	LoadingManager,
 	PerspectiveCamera,
 	RGBAFormat,
+	SRGBColorSpace,
 	Scene,
-	sRGBEncoding,
 	TextureLoader,
 	WebGLRenderer
 } from "three";
@@ -55,7 +55,7 @@ function load(): Promise<Map<string, unknown>> {
 
 		cubeTextureLoader.load(urls, (t) => {
 
-			t.encoding = sRGBEncoding;
+			t.colorSpace = SRGBColorSpace;
 			assets.set("sky", t);
 
 		});
@@ -76,9 +76,6 @@ window.addEventListener("load", () => void load().then((assets) => {
 	});
 
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
-	renderer.physicallyCorrectLights = true;
-	renderer.outputEncoding = sRGBEncoding;
-
 	const container = document.querySelector(".viewport") as HTMLElement;
 	container.dataset.epilepsyWarning = "1";
 	container.prepend(renderer.domElement);
