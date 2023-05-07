@@ -58,7 +58,7 @@ function prefixSubstrings(prefix: string, substrings: Iterable<string>, strings:
 
 function integrateEffect(prefix: string, effect: Effect, data: EffectShaderData): void {
 
-	if(!effect.fragmentShader) {
+	if(effect.fragmentShader === null) {
 
 		throw new Error(`Missing fragment shader (${effect.name})`);
 
@@ -459,7 +459,9 @@ export class EffectPass extends Pass<EffectMaterial> implements EventListenerObj
 		data.shaderParts.set(Section.FRAGMENT_MAIN_UV, fragmentMainUv);
 
 		// Ensure that leading preprocessor directives start on a new line.
-		data.shaderParts.forEach((value, key, map) => map.set(key, value ? value.trim().replace(/^#/, "\n#") : null));
+		data.shaderParts.forEach(
+			(value, key, map) => map.set(key, value !== null ? value.trim().replace(/^#/, "\n#") : null)
+		);
 
 		this.fullscreenMaterial.setShaderParts(data.shaderParts)
 			.setDefines(data.defines)
