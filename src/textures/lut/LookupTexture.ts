@@ -4,9 +4,9 @@ import {
 	DataTexture,
 	FloatType,
 	LinearFilter,
-	LinearEncoding,
+	LinearSRGBColorSpace,
 	RGBAFormat,
-	sRGBEncoding,
+	SRGBColorSpace,
 	Texture,
 	UnsignedByteType,
 	Vector3
@@ -14,40 +14,6 @@ import {
 
 import { RawImageData } from "../RawImageData.js";
 import workerProgram from "temp/lut/worker.txt";
-
-/**
- * 3D image data.
- *
- * @group Textures
- */
-
-interface Image3DData {
-
-	/**
-	 * The image data.
-	 */
-
-	data: Uint8Array | Float32Array;
-
-	/**
-	 * The width in pixels.
-	 */
-
-	width: number;
-
-	/**
-	 * The height in pixels.
-	 */
-
-	height: number;
-
-	/**
-	 * The depth in pixels.
-	 */
-
-	depth: number;
-
-}
 
 /**
  * LUT input domain bounds.
@@ -113,7 +79,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 	async scaleUp(size: number, transferData = true): Promise<LookupTexture> {
 
-		const image = this.image as Image3DData;
+		const image = this.image;
 		let promise;
 
 		if(size <= image.width) {
@@ -133,7 +99,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 				worker.addEventListener("message", (event: MessageEvent<ArrayBufferView>) => {
 
 					const lut = new LookupTexture(event.data, size);
-					lut.encoding = this.encoding;
+					lut.colorSpace = this.colorSpace;
 					lut.type = this.type;
 					lut.name = this.name;
 
@@ -166,8 +132,8 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 	applyLUT(lut: LookupTexture): this {
 
-		const img0 = this.image as Image3DData;
-		const img1 = lut.image as Image3DData;
+		const img0 = this.image;
+		const img1 = lut.image;
 
 		const size0 = Math.min(img0.width, img0.height, img0.depth);
 		const size1 = Math.min(img1.width, img1.height, img1.depth);
@@ -226,7 +192,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 		if(this.type === FloatType) {
 
-			const img = this.image as Image3DData;
+			const img = this.image;
 			const floatData = img.data;
 			const uint8Data = new Uint8Array(floatData.length);
 
@@ -236,7 +202,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 			}
 
-			img.data = uint8Data;
+			this.source.data = uint8Data;
 			this.type = UnsignedByteType;
 			this.needsUpdate = true;
 
@@ -256,7 +222,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 		if(this.type === UnsignedByteType) {
 
-			const img = this.image as Image3DData;
+			const img = this.image;
 			const uint8Data = img.data;
 			const floatData = new Float32Array(uint8Data.length);
 
@@ -266,7 +232,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 			}
 
-			img.data = floatData;
+			this.source.data = floatData;
 			this.type = FloatType;
 			this.needsUpdate = true;
 
@@ -284,7 +250,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 	convertLinearToSRGB(): this {
 
-		const img = this.image as Image3DData;
+		const img = this.image;
 		const data = img.data;
 
 		if(this.type === FloatType) {
@@ -295,7 +261,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 			}
 
-			this.encoding = sRGBEncoding;
+			this.colorSpace = SRGBColorSpace;
 			this.needsUpdate = true;
 
 		} else {
@@ -316,7 +282,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 	convertSRGBToLinear(): this {
 
-		const img = this.image as Image3DData;
+		const img = this.image;
 		const data = img.data;
 
 		if(this.type === FloatType) {
@@ -327,7 +293,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 			}
 
-			this.encoding = LinearEncoding;
+			this.colorSpace = LinearSRGBColorSpace;
 			this.needsUpdate = true;
 
 		} else {
@@ -350,7 +316,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 
 	toDataTexture(): DataTexture {
 
-		const img = this.image as Image3DData;
+		const img = this.image;
 		const width = img.width;
 		const height = img.height * img.depth;
 
@@ -358,7 +324,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 		texture.name = this.name;
 		texture.type = this.type;
 		texture.format = this.format;
-		texture.encoding = this.encoding;
+		texture.colorSpace = this.colorSpace;
 		texture.minFilter = LinearFilter;
 		texture.magFilter = LinearFilter;
 		texture.wrapS = this.wrapS;
@@ -442,7 +408,7 @@ export class LookupTexture extends Data3DTexture implements LUTDomainBounds {
 		}
 
 		const lut = new LookupTexture(data, size);
-		lut.encoding = texture.encoding;
+		lut.colorSpace = texture.colorSpace;
 		lut.type = texture.type;
 		lut.name = texture.name;
 
