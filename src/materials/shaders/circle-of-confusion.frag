@@ -16,11 +16,34 @@ uniform vec2 cameraParams;
 
 varying vec2 vUv;
 
-#define getDepth(uv) texture2D(depthBuffer, uv).r
+float readDepth(const in vec2 uv) {
+
+	#if DEPTH_PACKING == 3201
+
+		float depth = unpackRGBAToDepth(texture2D(depthBuffer, uv));
+
+	#else
+
+		float depth = texture2D(depthBuffer, uv).r;
+
+	#endif
+
+	#ifdef LOG_DEPTH
+
+		float d = pow(2.0, depth * log2(cameraFar + 1.0)) - 1.0;
+		float a = cameraFar / (cameraFar - cameraNear);
+		float b = cameraFar * cameraNear / (cameraNear - cameraFar);
+		depth = a + b / d;
+
+	#endif
+
+	return depth;
+
+}
 
 void main() {
 
-	float depth = getDepth(vUv);
+	float depth = readDepth(vUv);
 
 	#ifdef PERSPECTIVE_CAMERA
 
