@@ -38,6 +38,4 @@ void main() {
 	vec4 baseColor = texture2D(supportBuffer, vUv);
 	gl_FragColor = mix(baseColor, c, radius);
 
-	#include <colorspace_fragment>
-
 }

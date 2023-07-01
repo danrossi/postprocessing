@@ -34,6 +34,14 @@ export enum ToneMappingMode {
 	 * ACES tone mapping with a scale of 1.0/0.6.
 	 */
 
-	ACES_FILMIC
+	ACES_FILMIC,
+
+	/**
+	 * Uncharted 2 tone mapping.
+	 *
+	 * @see http://filmicworlds.com/blog/filmic-tonemapping-operators
+	 */
+
+	UNCHARTED2
 
 }

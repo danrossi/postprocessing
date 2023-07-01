@@ -109,7 +109,7 @@ void main() {
 
 	gl_FragColor = color0;
 
-	#ifdef ENCODE_OUTPUT
+	#ifdef COLOR_SPACE_CONVERSION
 
 		#include <colorspace_fragment>
 

@@ -141,26 +141,26 @@ export class EffectMaterial extends ShaderMaterial implements Resizable {
 	}
 
 	/**
-	 * Indicates whether output encoding is enabled.
+	 * Indicates whether output color space conversion is enabled.
 	 */
 
-	get encodeOutput(): boolean {
+	get colorSpaceConversion(): boolean {
 
-		return (this.defines.ENCODE_OUTPUT !== undefined);
+		return (this.defines.COLOR_SPACE_CONVERSION !== undefined);
 
 	}
 
-	set encodeOutput(value: boolean) {
+	set colorSpaceConversion(value: boolean) {
 
-		if(this.encodeOutput !== value) {
+		if(this.colorSpaceConversion !== value) {
 
 			if(value) {
 
-				this.defines.ENCODE_OUTPUT = "1";
+				this.defines.COLOR_SPACE_CONVERSION = "1";
 
 			} else {
 
-				delete this.defines.ENCODE_OUTPUT;
+				delete this.defines.COLOR_SPACE_CONVERSION;
 
 			}
 

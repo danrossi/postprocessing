@@ -28,6 +28,4 @@ void main() {
 
 	gl_FragColor = result;
 
-	#include <colorspace_fragment>
-
 }
