@@ -14,6 +14,8 @@ import {
 	WebGLRenderer
 } from "three";
 
+import { VRButton } from "../utils/VRButton";
+
 import {
 	BlendFunction,
 	OutlineEffect,
@@ -95,6 +97,10 @@ window.addEventListener("load", () => load().then((assets) => {
 		depth: false
 	});
 
+	// enable xr
+	renderer.xr.setReferenceSpaceType("local");
+	renderer.xr.enabled = true;
+
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
 	renderer.shadowMap.type = VSMShadowMap;
 	renderer.shadowMap.autoUpdate = false;
@@ -103,6 +109,7 @@ window.addEventListener("load", () => load().then((assets) => {
 
 	const container = document.querySelector(".viewport");
 	container.prepend(renderer.domElement);
+	container.append(VRButton.createButton(renderer));
 
 	// Camera & Controls
 
@@ -239,7 +246,7 @@ window.addEventListener("load", () => load().then((assets) => {
 
 	let t0 = 0;
 
-	requestAnimationFrame(function render(timestamp) {
+	renderer.setAnimationLoop(timestamp => {
 
 		const deltaTime = timestamp - t0;
 		t0 = timestamp;
@@ -247,8 +254,7 @@ window.addEventListener("load", () => load().then((assets) => {
 		fpsMeter.update(timestamp);
 		controls.update(timestamp);
 		animationMixer.update(deltaTime * 1e-3);
-		composer.render();
-		requestAnimationFrame(render);
+		composer.render(timestamp);
 
 	});
 

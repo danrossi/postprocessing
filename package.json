@@ -88,7 +88,7 @@
 		"watch:js": "node esbuild -w"
 	},
 	"peerDependencies": {
-		"three": ">= 0.138.0 < 0.155.0"
+		"three": ">= 0.138.0 < 0.156.0"
 	},
 	"devDependencies": {
 		"@tweakpane/core": "1.x.x",
@@ -120,7 +120,7 @@
 		"stylelint": "15.x.x",
 		"stylelint-config-standard-scss": "10.x.x",
 		"stylelint-order": "6.x.x",
-		"three": "0.x.x",
+		"three": "CodyJasonBennett/three.js#fix/offscreen-webxr",
 		"three-demo": "5.x.x",
 		"tiny-glob": "0.x.x",
 		"tslib": "2.x.x",

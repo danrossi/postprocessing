@@ -408,4 +408,21 @@ export class Pass {
 
 	}
 
+	/**
+	 * Enable / disable XR transformations
+	 * @param {WebGLRenderer} renderer
+	 * @param {Boolean} enable
+	 */
+	toggleXR(renderer, enable) {
+
+		// only toggle while presenting
+		if(renderer.xr.isPresenting) {
+
+			this.xrEnabled = renderer.xr;
+			renderer.xr = enable;
+
+		}
+
+	}
+
 }

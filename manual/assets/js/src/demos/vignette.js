@@ -8,6 +8,8 @@ import {
 	WebGLRenderer
 } from "three";
 
+import { VRButton } from "../utils/VRButton";
+
 import {
 	BlendFunction,
 	EffectComposer,
@@ -63,9 +65,14 @@ window.addEventListener("load", () => load().then((assets) => {
 		depth: false
 	});
 
+	// enable xr
+	renderer.xr.setReferenceSpaceType("local");
+	renderer.xr.enabled = true;
+
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
 	const container = document.querySelector(".viewport");
 	container.prepend(renderer.domElement);
+	container.append(VRButton.createButton(renderer));
 
 	// Camera & Controls
 
@@ -135,12 +142,11 @@ window.addEventListener("load", () => load().then((assets) => {
 
 	// Render Loop
 
-	requestAnimationFrame(function render(timestamp) {
+	renderer.setAnimationLoop(timestamp => {
 
 		fpsMeter.update(timestamp);
 		controls.update(timestamp);
-		composer.render();
-		requestAnimationFrame(render);
+		composer.render(timestamp);
 
 	});
 

@@ -8,6 +8,8 @@ import {
 	WebGLRenderer
 } from "three";
 
+import { VRButton } from "../utils/VRButton";
+
 import {
 	EffectComposer,
 	GaussianBlurPass,
@@ -62,6 +64,10 @@ window.addEventListener("load", () => load().then((assets) => {
 		depth: false
 	});
 
+	// enable xr
+	renderer.xr.setReferenceSpaceType("local");
+	renderer.xr.enabled = true;
+
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
 	renderer.shadowMap.type = VSMShadowMap;
 	renderer.shadowMap.autoUpdate = false;
@@ -70,7 +76,7 @@ window.addEventListener("load", () => load().then((assets) => {
 
 	const container = document.querySelector(".viewport");
 	container.prepend(renderer.domElement);
-
+	container.append(VRButton.createButton(renderer));
 	// Camera & Controls
 
 	const camera = new PerspectiveCamera();
@@ -165,13 +171,11 @@ window.addEventListener("load", () => load().then((assets) => {
 	onResize();
 
 	// Render Loop
-
-	requestAnimationFrame(function render(timestamp) {
+	renderer.setAnimationLoop(timestamp => {
 
 		fpsMeter.update(timestamp);
 		controls.update(timestamp);
 		composer.render();
-		requestAnimationFrame(render);
 
 	});
 

@@ -320,7 +320,10 @@ export class RenderPass extends Pass {
 
 		} else {
 
+			// enable XR transformation for RenderPass only
+			this.toggleXR(renderer, true);
 			renderer.render(scene, camera);
+			this.toggleXR(renderer, false);
 
 		}
 

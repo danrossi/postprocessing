@@ -573,7 +573,14 @@ export class EffectPass extends Pass {
 			material.time += deltaTime * this.timeScale;
 
 			renderer.setRenderTarget(this.renderToScreen ? null : outputBuffer);
+
+			// temporarily disable webxr render so effect is applied fullscreen.
+			// some effects may need to be applied to each eye inidividually.
+			// reflects changes in PR https://github.com/mrdoob/three.js/pull/26160
+
+			this.toggleXR(renderer, false);
 			renderer.render(this.scene, this.camera);
+			this.toggleXR(renderer, this.xrEnabled);
 
 		}
 
