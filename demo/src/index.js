@@ -6,6 +6,8 @@ import {
 	WebGLRenderer
 } from "three";
 
+import { VRButton } from "./utils/VRButton";
+
 import { calculateVerticalFoV, DemoManager } from "three-demo";
 import { EffectComposer, OverrideMaterialManager } from "../../src";
 import { ProgressManager } from "./utils/ProgressManager";
@@ -51,6 +53,10 @@ window.addEventListener("load", (event) => {
 	renderer.shadowMap.enabled = true;
 	renderer.info.autoReset = false;
 
+	// enable xr
+	//renderer.xr.setReferenceSpaceType("local");
+	renderer.xr.enabled = true;
+
 	// Enable the override material workaround.
 	OverrideMaterialManager.workaroundEnabled = true;
 
@@ -64,6 +70,8 @@ window.addEventListener("load", (event) => {
 		aside: document.getElementById("aside"),
 		renderer
 	});
+
+	viewport.append(VRButton.createButton(renderer));
 
 	// Setup demo switch and load event handlers.
 	manager.addEventListener("change", (event) => {
@@ -188,9 +196,8 @@ window.addEventListener("load", (event) => {
 
 	}
 
-	requestAnimationFrame(function render(timestamp) {
+	renderer.setAnimationLoop(timestamp => {
 
-		requestAnimationFrame(render);
 		renderer.info.reset();
 		manager.render(timestamp);
 

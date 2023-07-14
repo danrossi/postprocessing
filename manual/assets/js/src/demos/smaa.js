@@ -69,7 +69,7 @@ window.addEventListener("load", () => load().then((assets) => {
 	});
 
 	// enable xr
-	renderer.xr.setReferenceSpaceType("local");
+	// renderer.xr.setReferenceSpaceType("local");
 	renderer.xr.enabled = true;
 
 	renderer.debug.checkShaderErrors = (window.location.hostname === "localhost");
