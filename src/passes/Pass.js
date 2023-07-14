@@ -418,8 +418,8 @@ export class Pass {
 		// only toggle while presenting
 		if(renderer.xr.isPresenting) {
 
-			this.xrEnabled = renderer.xr;
-			renderer.xr = enable;
+			this.xrEnabled = renderer.xr.enabled;
+			renderer.xr.enabled = enable;
 
 		}
 
